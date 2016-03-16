@@ -39,7 +39,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Chess Utils - Clock</a>
+          <a class="navbar-brand" href="#">Chess Utils</a>
         </div>
       <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -57,14 +57,14 @@
         <div>
           <div class="col-md-3">
             <label for="inputTimeMin" class="sr-only">Starting time</label>
-            <input type="number" id="inputTimeMin" class="form-control" placeholder="Starting Time Min" required="" autofocus="">
+            <input type="number" id="inputTimeMin" class="form-control" placeholder="Minutes" required="" autofocus="">
           </div>
           <div class="col-md-1">
             <div style="width:100%; text-align:center;"><h2 style="margin-top:0px; margin-bottom:0px;">:</h2></div>
           </div>
           <div class="col-md-3">
             <label for="inputTimeSec" class="sr-only">Starting time</label>
-            <input type="number" id="inputTimeSec" class="form-control" placeholder="Starting Time Sec" required="" autofocus="">
+            <input type="number" id="inputTimeSec" class="form-control" placeholder="Seconds" required="" autofocus="">
           </div>
           <div class="col-md-1">
             <div style="width:100%; text-align:center;"><h2 style="margin-top:0px; margin-bottom:0px;">+</h2></div>
@@ -76,7 +76,9 @@
         </div>
           <br>
           <br>
-          <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="StartClock()">Start</button>
+          <div class="span2">
+            <button class="btn btn-primary btn-block" type="submit" onclick="StartClock()">Start</button>
+          </div>
           
   
     </div>
