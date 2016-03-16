@@ -14,6 +14,18 @@
       <!--Import jQuery before materialize.js-->
       <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
       <script type="text/javascript" src="js/bootstrap.min.js"></script>
+      <script type="text/javascript">
+
+      function StartClock(){
+
+        var min = $("#inputTimeMin").val() || 0;
+        var sec = $("#inputTimeSec").val() || 0;
+        var inc = $("#inputInc").val() || 0;
+
+        window.location.href = "clockStart.html?min=" + min + "&sec=" + sec + "&inc=" + inc;
+
+      }
+
       </script>
 
     <!--NAVBAR-->
@@ -39,8 +51,35 @@
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
-         
 
+      <div class="container">
+        <h2 class="form-signin-heading">Select your time</h2>
+        <div>
+          <div class="col-md-3">
+            <label for="inputTimeMin" class="sr-only">Starting time</label>
+            <input type="number" id="inputTimeMin" class="form-control" placeholder="Starting Time Min" required="" autofocus="">
+          </div>
+          <div class="col-md-1">
+            <div style="width:100%; text-align:center;"><h2 style="margin-top:0px; margin-bottom:0px;">:</h2></div>
+          </div>
+          <div class="col-md-3">
+            <label for="inputTimeSec" class="sr-only">Starting time</label>
+            <input type="number" id="inputTimeSec" class="form-control" placeholder="Starting Time Sec" required="" autofocus="">
+          </div>
+          <div class="col-md-1">
+            <div style="width:100%; text-align:center;"><h2 style="margin-top:0px; margin-bottom:0px;">+</h2></div>
+          </div>
+          <div class="col-md-3">
+            <label for="inputInc" class="sr-only">Increment/label></label>
+            <input type="number" id="inputInc" class="form-control" placeholder="Increment" required="">
+          </div>
+        </div>
+          <br>
+          <br>
+          <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="StartClock()">Start</button>
+          
+  
+    </div>
 
 
     </body>

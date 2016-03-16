@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <!--Import Google Icon Font-->
+      <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"  media="screen,projection"/>
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+
+    <body>
+      <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+
+      var topTurn = true;
+      var gameStarted = false;
+      var Onemin = getParameterByName("min") || 0;
+      var Onesec = getParameterByName("sec") || 0;
+      var Twomin = Onemin;
+      var Twosec = Onesec;
+      var inc = getParameterByName("inc") || 0;
+
+      function updateTurn(x){
+        if(x == topTurn){
+          topTurn = !topTurn;
+          if (topTurn){
+            $("#top_div").css("background-color","rgba(116,218,223, 1)");
+            $("#bottom_div").css("background-color","rgba(116,218,223, 0.5)");
+          }else{
+            $("#top_div").css("background-color","rgba(116,218,223, 0.5)");
+            $("#bottom_div").css("background-color","rgba(116,218,223, 1)");
+          }
+        }
+        if(!gameStarted){setTimeout(updateTime, 1000); gameStarted = true;}
+      }
+
+      function updateTime(){
+
+        if(topTurn){
+          Onesec --;
+          if (Onesec == -1){Onesec = 59; Onemin --;}
+          updateOne();
+        }else{
+          Twosec --;
+          if (Twosec == -1){Twosec = 59; Twomin --;}
+          updateTwo();
+        }
+        setTimeout(updateTime, 1000);
+      }
+
+      function updateOne(){
+        var Seporator = ":";
+        if(Onesec < 10){Seporator +="0";}
+        $("#top").text(Onemin + Seporator + Onesec);
+      }
+
+      function updateTwo(){
+        var Seporator = ":";
+        if(Twosec < 10){Seporator +="0";}
+        $("#bottom").text(Twomin + Seporator + Twosec);
+      }
+
+      function getParameterByName(name, url) {
+          if (!url) url = window.location.href;
+          url = url.toLowerCase(); // This is just to avoid case sensitiveness  
+          name = name.replace(/[\[\]]/g, "\\$&").toLowerCase();// This is just to avoid case sensitiveness for query parameter name
+          var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+              results = regex.exec(url);
+          if (!results) return null;
+          if (!results[2]) return '';
+          return decodeURIComponent(results[2].replace(/\+/g, " "));
+      }
+
+    </script>
+
+    <style type="text/css">
+
+      #container {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+      }
+
+      #top_div {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 50%;
+        border-style: solid;
+        background-color: rgba(116,218,223, 1); 
+        border-color: rgba(89,90,125, 1);
+        border-width: 2px;
+        text-align:center;
+      }
+
+      #bottom_div {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        border-style: solid;
+        background-color: rgba(116,218,223, 0.5); 
+        border-color: rgba(89,90,125, 1);
+        border-width: 2px;
+        text-align:center;
+      }
+
+      .timer{
+        height:100%;
+        display: -webkit-flexbox;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+        justify-content: center;
+      }
+
+    </style>  
+
+
+    <div id="container">
+
+      <div id="top_div" onclick="updateTurn(true)">
+        
+        <div class="timer"><h2 id="top"></h2></div>
+
+      </div>    
+      <div id="bottom_div" onclick="updateTurn(false)">
+
+        <div class="timer"><h2 id="bottom"></h2></div>
+
+      </div>
+
+      </div>
+      <script type="text/javascript">
+        updateOne();
+        updateTwo();
+      </script>
+
+    </body>
+ 
+  </html>
