@@ -17,6 +17,11 @@
       <script type="text/javascript" src="js/bootstrap.min.js"></script>
       <script type="text/javascript" src="js/chessboard-0.3.0.js"></script>
 
+      <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script> 
+      <script type="text/javascript" src="js/jquery-ui-1.8.24.custom.min.js"></script> 
+      <script type="text/javascript" src="js/garbochess.js"></script>
+      <script type="text/javascript" src="js/boardui.js"></script> 
+
     <!--NAVBAR-->
     <nav class="navbar navbar-default">
       <div class="container-fluid">
@@ -41,25 +46,114 @@
       </div><!-- /.container-fluid -->
     </nav>
 
-    <div id="board1" style="margin:auto;"></div>
+    <div class="container" style="width:100%;">
+        <h2 style="text-align:center;" id="out"></h2>
+    </div>
+
+    <div id="chessboard" style="margin:auto;"></div>
     <br>
     <div class="container">
       <div class="span2">
        <input type="button" id="startBtn" class="btn btn-primary btn-block" value="Start" />
        <input type="button" id="clearBtn" class="btn btn-primary btn-block" value="Clear" />
+       <input type="button" id="engineBtn" class="btn btn-primary btn-block" value="Engine" />
       </div>
     </div>
     <br>
+    <div class="container">
+        <label class="col-md-2"><input id="woo" type="checkbox" checked> White O-O</label>
+        <label class="col-md-2"><input id="wooo" type="checkbox" checked> White O-O-O</label>
+        <label class="col-md-2"><input id="boo" type="checkbox" checked> Black O-O</label>
+        <label class="col-md-2"><input id="booo" type="checkbox" checked> Black O-O-O</label>
+        <label class="col-md-2"><input id="wt" type="radio" name="turn" checked> White Turn</label>
+        <label class="col-md-2"><input id="bt" type="radio" name="turn"> Black Turn</label>
+    </div>
+      
+      
+  <script type="text/javascript">
+      $(document).ready(function () {
+          g_timeout = 1000;
+          UINewGame();
+      });
+    </script> 
+
+        <div style="display:none;">
+        <div style="display:hidden;">
+        <div id='board'></div>  
+        <textarea cols='50' rows='6' id='PgnTextBox'></textarea><br/>
+        <div>
+        <a id='AnalysisToggleLink' href="javascript:UIAnalyzeToggle()">Analysis: Off</a>
+        </div>
+        <span id='output'></span><br/>
+        <input id='FenTextBox' onchange="javascript:UIChangeFEN()"/>
+        </div>
+        </div> 
+    
     <script type="text/javascript">
-      if(screen.width < screen.height){$("#board1").css("width","90%");}
-        else{$("#board1").css("width","30%");}
-      var board1 = ChessBoard('board1', {
+      if(screen.width < screen.height){$("#chessboard").css("width","90%");}
+        else{$("#chessboard").css("width","30%");}
+      var chessboard = ChessBoard('chessboard', {
         draggable: true,
         dropOffBoard: 'trash',
         sparePieces: true
       });
-      $('#startBtn').on('click', board1.start);
-      $('#clearBtn').on('click', board1.clear);
+      $('#startBtn').on('click', chessboard.start);
+      $('#clearBtn').on('click', chessboard.clear);
+      $('#engineBtn').click(analyse);
+
+      function analyse(){
+        var fen = chessboard.position('fen')
+        if ($('#wt').is(':checked')){fen += " w ";}
+        if ($('#bt').is(':checked')){fen += " b ";}
+        if ($('#woo').is(':checked')){fen += "K";}
+        if ($('#wooo').is(':checked')){fen += "Q";}
+        if ($('#boo').is(':checked')){fen += "k";}
+        if ($('#booo').is(':checked')){fen += "q";}
+        fen += " -"
+        
+        $('#FenTextBox').val(fen);
+        UIChangeFEN();
+        UIAnalyzeToggle();
+        console.log(fen);
+        setTimeout(finish, 5000);
+        setTimeout(p, 500);
+      }
+
+      function p(){
+        var out = $('#output').text();
+        var sbstring = out.substring(out.indexOf("Score:")+6, out.indexOf("Score:")+12);
+        var score = parseInt(sbstring);
+        console.log(out);
+        console.log(sbstring);
+        console.log(score);
+        var n = score / 1000;
+        if (n < 0){
+          if ($('#bt').is(':checked')){n = Math.abs(n); n = "+" + n;}
+          else{n = Math.abs(n); n = "-" + n;}
+        }
+        else if (n > 0){
+          if ($('#wt').is(':checked')){n = "+" + n;}
+          else{n = "-" + n;}
+        }
+        $('#out').text(n);
+      }
+
+      function finish(){
+        var out = $('#output').text();
+        var sbstring = out.substring(out.indexOf("Score:")+6, out.indexOf("Score:")+12);
+        var score = parseInt(sbstring);
+        var n = score / 1000;
+        if (n < 0){
+          if ($('#bt').is(':checked')){n = Math.abs(n); n = "+" + n;}
+          else{n = Math.abs(n); n = "-" + n;}
+        }
+        else if(n > 0){
+          if ($('#wt').is(':checked')){n = "+" + n;}
+          else{n = "-" + n;}
+        }
+        $('#out').text(n);
+        UIAnalyzeToggle();
+      }
     </script>  
 
     </body>
