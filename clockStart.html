@@ -18,24 +18,46 @@
 
       var topTurn = true;
       var gameStarted = false;
+      var needInc = false;
       var Onemin = getParameterByName("min") || 0;
       var Onesec = getParameterByName("sec") || 0;
       var Twomin = Onemin;
       var Twosec = Onesec;
       var inc = getParameterByName("inc") || 0;
+      console.log(inc);
+
+      function pause(){
+        if(gameStarted){
+          gameStarted = false;
+          $('#pauseIcon').css("display","none");
+          $('#backIcon').css("display","inline-block");
+        }
+        else{
+          window.location.href = "clock.html";
+        }
+        
+      }
 
       function updateTurn(x){
         if(x == topTurn){
           topTurn = !topTurn;
+          if (gameStarted){needInc = true;}
           if (topTurn){
             $("#top_div").css("background-color","rgba(116,218,223, 1)");
             $("#bottom_div").css("background-color","rgba(116,218,223, 0.5)");
           }else{
             $("#top_div").css("background-color","rgba(116,218,223, 0.5)");
             $("#bottom_div").css("background-color","rgba(116,218,223, 1)");
+
+          }
+        
+          if(!gameStarted){
+            setTimeout(updateTime, 1000); 
+            gameStarted = true;
+            $('#pauseIcon').css("display","inline-block");
+            $('#backIcon').css("display","none");
           }
         }
-        if(!gameStarted){setTimeout(updateTime, 1000); gameStarted = true;}
       }
 
       function updateTime(){
@@ -43,18 +65,32 @@
         if(topTurn){
           Onesec --;
           if (Onesec == -1){Onesec = 59; Onemin --;}
-          updateOne();
+
+          if(needInc){
+            needInc = false;
+            Twosec = parseInt(Twosec) + parseInt(inc);
+            if(Twosec >= 60){Twomin ++; Twosec = parseInt(Twosec) - 60;}
+          }
+
         }else{
           Twosec --;
           if (Twosec == -1){Twosec = 59; Twomin --;}
-          updateTwo();
+
+          if(needInc){
+            needInc = false;
+            Onesec = parseInt(Onesec) + parseInt(inc);
+            if(Onesec >= 60){Onemin ++; Onesec = parseInt(Onesec) - 60;}
+          }
+
         }
-        setTimeout(updateTime, 1000);
+        updateOne();
+        updateTwo();
+        if(gameStarted){setTimeout(updateTime, 1000);}
       }
 
       function updateOne(){
         var Seporator = ":";
-        if(Onesec < 10){Seporator +="0";}
+        if(Onesec < 10){Seporator += "0";}
         $("#top").text(Onemin + Seporator + Onesec);
       }
 
@@ -126,6 +162,33 @@
         justify-content: center;
       }
 
+      #top{
+        -webkit-transform:rotate(-180deg);
+        -moz-transform:rotate(-180deg); 
+        -o-transform:rotate(-180deg); 
+        transform:rotate(-180deg);
+        ms-filter:"progid:DXImageTransform.Microsoft.BasicImage(rotation=2)";
+        filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+      }
+
+      .pause{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -50px;
+        margin-left: -50px;
+        height: 100px;
+        width: 100px;
+        display: flex;
+        align-items: center;
+        border-radius: 50px;
+        border-style: solid;
+        background-color: rgba(116,218,223, 1); 
+        border-color: rgba(89,90,125, 1);
+        border-width: 2px;
+        z-index: 100;
+      }
+
     </style>  
 
 
@@ -136,6 +199,12 @@
         <div class="timer"><h2 id="top"></h2></div>
 
       </div>    
+
+      <div class="pause">
+        <span id="pauseIcon" style="margin:auto; margin-bottom: 25px; margin-left:25px; font-size:48px; display:none;" class="glyphicon glyphicon-pause" aria-hidden="true" onclick="pause()"></span>
+      <span id="backIcon" style="margin:auto; font-size:48px; display:inline-block;" class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true" onclick="pause()"></span>
+      </div>
+
       <div id="bottom_div" onclick="updateTurn(false)">
 
         <div class="timer"><h2 id="bottom"></h2></div>
