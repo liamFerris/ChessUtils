@@ -85,6 +85,18 @@
         }
         updateOne();
         updateTwo();
+        if(Onesec == 0 && Onemin == 0 ){
+          gameStarted = false; 
+          alert("Player Two wins");
+          $('#pauseIcon').css("display","none");
+          $('#backIcon').css("display","inline-block");
+        }
+        if(Twosec == 0 && Twomin == 0 ){
+          gameStarted = false; 
+          alert("Player One wins");
+          $('#pauseIcon').css("display","none");
+          $('#backIcon').css("display","inline-block");
+        }
         if(gameStarted){setTimeout(updateTime, 1000);}
       }
 
