@@ -44,6 +44,7 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
+            <li><a href="index.html">Home</a></li>
             <li><a href="clock.html">Clock</a></li>
             <li><a href="engine.html">Engine</a></li>
             <li><a href="#">Play</a></li>
@@ -52,34 +53,34 @@
       </div><!-- /.container-fluid -->
     </nav>
 
-      <div class="container">
-        <h2 class="form-signin-heading">Select your time</h2>
-        <div>
-          <div class="col-md-3">
+      <div class="container-fluid">
+        <h2 class="form-signin-heading" style="text-align:center;">Select your time</h2>
+          <div class="col-md-2"></div>
+          <div class="col-md-2">
             <label for="inputTimeMin" class="sr-only">Starting time</label>
-            <input type="number" id="inputTimeMin" class="form-control" placeholder="Minutes" required="" autofocus="">
+            <input type="number" pattern="[0-9]*" inputmode="numeric" id="inputTimeMin" class="form-control" placeholder="Minutes">
           </div>
           <div class="col-md-1">
             <div style="width:100%; text-align:center;"><h2 style="margin-top:0px; margin-bottom:0px;">:</h2></div>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-2">
             <label for="inputTimeSec" class="sr-only">Starting time</label>
-            <input type="number" id="inputTimeSec" class="form-control" placeholder="Seconds" required="" autofocus="">
+            <input type="number" pattern="[0-9]*" inputmode="numeric" id="inputTimeSec" class="form-control" placeholder="Seconds">
           </div>
           <div class="col-md-1">
             <div style="width:100%; text-align:center;"><h2 style="margin-top:0px; margin-bottom:0px;">+</h2></div>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-2">
             <label for="inputInc" class="sr-only">Increment/label></label>
-            <input type="number" id="inputInc" class="form-control" placeholder="Increment" required="">
+            <input type="number" pattern="[0-9]*" inputmode="numeric" id="inputInc" class="form-control" placeholder="Increment">
           </div>
-        </div>
           <br>
           <br>
-          <div class="span2">
+          <div class="col-md-5"></div>
+          <div class="col-md-2">
             <button class="btn btn-primary btn-block" type="submit" onclick="StartClock()">Start</button>
           </div>
-          
+          <div class="col-md-5"></div>
   
     </div>
 
