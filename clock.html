@@ -18,9 +18,9 @@
 
       function StartClock(){
 
-        var min = $("#inputTimeMin").val() || 0;
-        var sec = $("#inputTimeSec").val() || 0;
-        var inc = $("#inputInc").val() || 0;
+        var min = parseInt($("#inputTimeMin").val()) || 0;
+        var sec = parseInt($("#inputTimeSec").val()) || 0;
+        var inc = parseInt($("#inputInc").val()) || 0;
 
         window.location.href = "clockStart.html?min=" + min + "&sec=" + sec + "&inc=" + inc;
 
@@ -39,7 +39,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Chess Utils</a>
+          <a class="navbar-brand" href="#">ChessT Clock</a>
         </div>
       <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

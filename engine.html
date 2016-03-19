@@ -33,7 +33,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Chess Utils</a>
+          <a class="navbar-brand" href="#">ChessT Engine</a>
         </div>
       <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -48,7 +48,7 @@
     </nav>
 
     <div class="container" style="width:100%;">
-        <h2 style="text-align:center;" id="out"></h2>
+      <h2 style="text-align:center;" id="out"></h2>
     </div>
 
     <div id="chessboard" style="margin:auto;"></div>
@@ -56,8 +56,9 @@
     <div class="container">
       <div class="span2">
         <input type="button" id="engineBtn" class="btn btn-primary btn-block" value="Engine" />
-       <input type="button" id="startBtn" class="btn btn-primary btn-block" value="Start" />
-       <input type="button" id="clearBtn" class="btn btn-primary btn-block" value="Clear" />
+        <input type="button" id="startBtn" class="btn btn-primary btn-block" value="Start" />
+        <input type="button" id="clearBtn" class="btn btn-primary btn-block" value="Clear" />
+        <input type="button" id="flipBtn" class="btn btn-primary btn-block" value="Flip Board" onclick="chessboard.flip()" />
        
       </div>
     </div>
@@ -84,15 +85,11 @@
     </script> 
 
         <div style="display:none;">
-        <div style="display:hidden;">
         <div id='board'></div>  
-        <textarea cols='50' rows='6' id='PgnTextBox'></textarea><br/>
-        <div>
+        <textarea id='PgnTextBox'></textarea>
         <a id='AnalysisToggleLink' href="javascript:UIAnalyzeToggle()">Analysis: Off</a>
-        </div>
-        <span id='output'></span><br/>
+        <span id='output'></span>
         <input id='FenTextBox' onchange="javascript:UIChangeFEN()"/>
-        </div>
         </div> 
     
     <script type="text/javascript">
