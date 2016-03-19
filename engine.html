@@ -118,6 +118,7 @@
         UIChangeFEN();
         UIAnalyzeToggle();
         console.log(fen);
+        $('#engineBtn').attr("disabled", true);
         setTimeout(finish, 5000);
         setTimeout(p, 500);
       }
@@ -156,6 +157,7 @@
         }
         $('#out').text(n);
         UIAnalyzeToggle();
+        $('#engineBtn').attr("disabled", false);
       }
     </script>  
 
