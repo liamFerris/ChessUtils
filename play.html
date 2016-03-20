@@ -27,7 +27,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">ChessT Play</a>
+          <a class="navbar-brand" href="index.html">ChessT Play</a>
         </div>
       <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -86,9 +86,9 @@
       var status = '';
 
       var moveColor = 'White';
-      board.orientation('white');
+      setTimeout(f, 500, 'white');
       if (game.turn() === 'b') {
-        board.orientation('black');
+        setTimeout(f, 500, 'black');
         moveColor = 'Black';
       }
 
@@ -129,6 +129,10 @@
         else{$("#board").css("width","30%");}
     board = ChessBoard('board', cfg);
     updateStatus();
+
+    function f(color){
+      board.orientation(color);
+    }
 
     </script>
 
