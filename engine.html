@@ -51,8 +51,8 @@
     <div class="container">
       <div class="span2">
         <input type="button" id="engineBtn" class="btn btn-primary btn-block" value="Engine" />
-        <input type="button" id="startBtn" class="btn btn-primary btn-block" value="Start" />
-        <input type="button" id="clearBtn" class="btn btn-primary btn-block" value="Clear" />
+        <input type="button" id="startBtn" class="btn btn-primary btn-block" value="Start" onclick="Start()" />
+        <input type="button" id="clearBtn" class="btn btn-primary btn-block" value="Clear" onclick="Clear()" />
         <input type="button" id="flipBtn" class="btn btn-primary btn-block" value="Flip Board" onclick="chessboard.flip()" />
        
       </div>
@@ -98,6 +98,21 @@
       $('#startBtn').on('click', chessboard.start);
       $('#clearBtn').on('click', chessboard.clear);
       $('#engineBtn').click(analyse);
+
+      function Start(){
+        console.log("d");
+        $('#woo').prop('checked', true);
+        $('#wooo').prop('checked', true);
+        $('#boo').prop('checked', true);
+        $('#booo').prop('checked', true);
+      }
+
+      function Clear(){
+        $('#woo').prop('checked', false);
+        $('#wooo').prop('checked', false);
+        $('#boo').prop('checked', false);
+        $('#booo').prop('checked', false);
+      }
 
       function analyse(){
         var fen = chessboard.position('fen')
