@@ -86,7 +86,9 @@
       var status = '';
 
       var moveColor = 'White';
+      board.orientation('white');
       if (game.turn() === 'b') {
+        board.orientation('black');
         moveColor = 'Black';
       }
 
