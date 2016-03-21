@@ -29,15 +29,30 @@
         </div>
       </nav>
 
-      <div class="container-fluid">
-        <div class="jumbotron">
-          <h1>Chess!</h1>
-          <p>Chess is fun, and here are a few utlities to enchance the experience.</p>
-        </div>
-
-        <div class="container-fluid" style="width:100%;">
-          <h3 style="text-align:center;"><a onclick="change('clock.html')" >Clock</a> &#8226; <a onclick="change('engine.html')">Engine</a> &#8226; <a onclick="change('play.html')">Play</a></h3>
-        </div>
+      <div class="container">
+        <a onclick="change('engine.html')" style="text-decoration: none; background-color: none; color:black;">
+          <div style="width:40%; margin:auto;">
+            <img style="margin:auto; display:block; width:100%;" src="img/gear.svg"/>
+            <h2 style="margin:auto; text-align:center; display:block;" >Engine</h2>
+          </div>
+          <p style="margin:auto; text-align:center; display:block;">Analysis board with no restrictions</p>
+        </a>
+        <br>        
+        <a onclick="change('clock.html')" style="text-decoration: none; background-color: none; color:black;">
+          <div style="width:40%; margin:auto;">
+            <img style="margin:auto; display:block; width:100%;" src="img/clock.svg"/>
+            <h2 style="margin:auto; text-align:center; display:block;" >Clock</h2>
+          </div>
+          <p style="margin:auto; text-align:center; display:block;">Define your own custom chess clock.</p>
+        </a>
+        <br>
+        <a onclick="change('play.html')" style="text-decoration: none; background-color: none; color:black;">
+          <div style="width:40%; margin:auto;">
+            <img style="margin:auto; display:block; width:100%;" src="img/icon.svg"/>
+            <h2 style="margin:auto; text-align:center; display:block;" >Play</h2>
+          </div>
+          <p style="margin:auto; text-align:center; display:block;">Play a Friend</p>
+        </a>
       </div>
     </body>
   </html>
