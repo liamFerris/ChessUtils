@@ -2,229 +2,220 @@
   <html>
     <head>
       <title>ChessT Clock</title>
-      <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"  media="screen,projection"/>
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
 
     <body>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script type="text/javascript">
+      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+      <script type="text/javascript" src="js/bootstrap.min.js"></script>
+      <script type="text/javascript">
 
-      var topTurn = true;
-      var gameStarted = false;
-      var needInc = false;
-      var Onemin = getParameterByName("min") || 0;
-      var Onesec = getParameterByName("sec") || 0;
-      var Twomin = Onemin;
-      var Twosec = Onesec;
-      var inc = getParameterByName("inc") || 0;
-      console.log(inc);
+        var topTurn = true;
+        var gameStarted = false;
+        var needInc = false;
+        var Onemin = getParameterByName("min") || 0;
+        var Onesec = getParameterByName("sec") || 0;
+        var Twomin = Onemin;
+        var Twosec = Onesec;
+        var inc = getParameterByName("inc") || 0;
+        console.log(inc);
 
-      function pause(){
-        if(gameStarted){
-          gameStarted = false;
-          $('#pauseIcon').css("display","none");
-          $('#backIcon').css("display","inline-block");
+        function pause(){
+          if(gameStarted){
+            gameStarted = false;
+            $('#pauseIcon').css("display","none");
+            $('#backIcon').css("display","inline-block");
+          }
+          else{
+            $('body').fadeOut();
+            setTimeout(changeDelay, 500, 'clock.html');
+          }
         }
-        else{
-          window.location.href = "clock.html";
-        }
-        
-      }
 
-      function updateTurn(x){
-        if(x == topTurn){
-          topTurn = !topTurn;
-          if (gameStarted){needInc = true;}
-          if (topTurn){
-            $("#top_div").css("background-color","rgba(116,218,223, 1)");
-            $("#bottom_div").css("background-color","rgba(116,218,223, 0.5)");
+        function changeDelay(page){
+          window.location.href = page;
+        }
+
+        function updateTurn(x){
+          if(x == topTurn){
+            topTurn = !topTurn;
+            if (gameStarted){needInc = true;}
+            if (topTurn){
+              $("#top_div").css("background-color","rgba(116,218,223, 1)");
+              $("#bottom_div").css("background-color","rgba(116,218,223, 0.5)");
+            }else{
+              $("#top_div").css("background-color","rgba(116,218,223, 0.5)");
+              $("#bottom_div").css("background-color","rgba(116,218,223, 1)");
+            }
+            if(!gameStarted){
+              setTimeout(updateTime, 1000); 
+              gameStarted = true;
+              $('#pauseIcon').css("display","inline-block");
+              $('#backIcon').css("display","none");
+            }
+          }
+        }
+
+        function updateTime(){
+
+          if(topTurn){
+            Onesec --;
+            if (Onesec == -1){Onesec = 59; Onemin --;}
+
+            if(needInc){
+              needInc = false;
+              Twosec = parseInt(Twosec) + parseInt(inc);
+              if(Twosec >= 60){Twomin ++; Twosec = parseInt(Twosec) - 60;}
+            }
+
           }else{
-            $("#top_div").css("background-color","rgba(116,218,223, 0.5)");
-            $("#bottom_div").css("background-color","rgba(116,218,223, 1)");
+            Twosec --;
+            if (Twosec == -1){Twosec = 59; Twomin --;}
+
+            if(needInc){
+              needInc = false;
+              Onesec = parseInt(Onesec) + parseInt(inc);
+              if(Onesec >= 60){Onemin ++; Onesec = parseInt(Onesec) - 60;}
+            }
 
           }
+          updateOne();
+          updateTwo();
+          if(Onesec == 0 && Onemin == 0 ){
+            gameStarted = false; 
+            alert("Player Two wins");
+            $('#pauseIcon').css("display","none");
+            $('#backIcon').css("display","inline-block");
+          }
+          if(Twosec == 0 && Twomin == 0 ){
+            gameStarted = false; 
+            alert("Player One wins");
+            $('#pauseIcon').css("display","none");
+            $('#backIcon').css("display","inline-block");
+          }
+          if(gameStarted){setTimeout(updateTime, 1000);}
+        }
+
+        function updateOne(){
+          var Seporator = ":";
+          if(Onesec < 10){Seporator += "0";}
+          $("#top").text(Onemin + Seporator + Onesec);
+        }
+
+        function updateTwo(){
+          var Seporator = ":";
+          if(Twosec < 10){Seporator +="0";}
+          $("#bottom").text(Twomin + Seporator + Twosec);
+        }
+
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            url = url.toLowerCase(); // This is just to avoid case sensitiveness  
+            name = name.replace(/[\[\]]/g, "\\$&").toLowerCase();// This is just to avoid case sensitiveness for query parameter name
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
         
-          if(!gameStarted){
-            setTimeout(updateTime, 1000); 
-            gameStarted = true;
-            $('#pauseIcon').css("display","inline-block");
-            $('#backIcon').css("display","none");
-          }
+      </script>
+
+      <style type="text/css">
+
+        #container {
+          position: absolute;
+          top: 0;
+          right: 0;
+          left: 0;
+          bottom: 0;
         }
-      }
 
-      function updateTime(){
-
-        if(topTurn){
-          Onesec --;
-          if (Onesec == -1){Onesec = 59; Onemin --;}
-
-          if(needInc){
-            needInc = false;
-            Twosec = parseInt(Twosec) + parseInt(inc);
-            if(Twosec >= 60){Twomin ++; Twosec = parseInt(Twosec) - 60;}
-          }
-
-        }else{
-          Twosec --;
-          if (Twosec == -1){Twosec = 59; Twomin --;}
-
-          if(needInc){
-            needInc = false;
-            Onesec = parseInt(Onesec) + parseInt(inc);
-            if(Onesec >= 60){Onemin ++; Onesec = parseInt(Onesec) - 60;}
-          }
-
+        #top_div {
+          position: absolute;
+          top: 0;
+          right: 0;
+          left: 0;
+          bottom: 50%;
+          border-style: solid;
+          background-color: rgba(116,218,223, 1); 
+          border-color: rgba(89,90,125, 1);
+          border-width: 2px;
+          text-align:center;
         }
-        updateOne();
-        updateTwo();
-        if(Onesec == 0 && Onemin == 0 ){
-          gameStarted = false; 
-          alert("Player Two wins");
-          $('#pauseIcon').css("display","none");
-          $('#backIcon').css("display","inline-block");
+
+        #bottom_div {
+          position: absolute;
+          top: 50%;
+          right: 0;
+          left: 0;
+          bottom: 0;
+          border-style: solid;
+          background-color: rgba(116,218,223, 0.5); 
+          border-color: rgba(89,90,125, 1);
+          border-width: 2px;
+          text-align:center;
         }
-        if(Twosec == 0 && Twomin == 0 ){
-          gameStarted = false; 
-          alert("Player One wins");
-          $('#pauseIcon').css("display","none");
-          $('#backIcon').css("display","inline-block");
+
+        .timer{
+          height:100%;
+          display: -webkit-flexbox;
+          display: -ms-flexbox;
+          display: -webkit-flex;
+          display: flex;
+          -webkit-flex-align: center;
+          -ms-flex-align: center;
+          -webkit-align-items: center;
+          align-items: center;
+          justify-content: center;
         }
-        if(gameStarted){setTimeout(updateTime, 1000);}
-      }
 
-      function updateOne(){
-        var Seporator = ":";
-        if(Onesec < 10){Seporator += "0";}
-        $("#top").text(Onemin + Seporator + Onesec);
-      }
+        #top{
+          -webkit-transform:rotate(-180deg);
+          -moz-transform:rotate(-180deg); 
+          -o-transform:rotate(-180deg); 
+          transform:rotate(-180deg);
+          ms-filter:"progid:DXImageTransform.Microsoft.BasicImage(rotation=2)";
+          filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+        }
 
-      function updateTwo(){
-        var Seporator = ":";
-        if(Twosec < 10){Seporator +="0";}
-        $("#bottom").text(Twomin + Seporator + Twosec);
-      }
+        .pause{
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          margin-top: -50px;
+          margin-left: -50px;
+          height: 100px;
+          width: 100px;
+          display: flex;
+          align-items: center;
+          border-radius: 50px;
+          border-style: solid;
+          background-color: rgba(116,218,223, 1); 
+          border-color: rgba(89,90,125, 1);
+          border-width: 2px;
+          z-index: 100;
+        }
 
-      function getParameterByName(name, url) {
-          if (!url) url = window.location.href;
-          url = url.toLowerCase(); // This is just to avoid case sensitiveness  
-          name = name.replace(/[\[\]]/g, "\\$&").toLowerCase();// This is just to avoid case sensitiveness for query parameter name
-          var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-              results = regex.exec(url);
-          if (!results) return null;
-          if (!results[2]) return '';
-          return decodeURIComponent(results[2].replace(/\+/g, " "));
-      }
+      </style>  
 
-    </script>
-
-    <style type="text/css">
-
-      #container {
-        position: absolute;
-        top: 0;
-        right: 0;
-        left: 0;
-        bottom: 0;
-      }
-
-      #top_div {
-        position: absolute;
-        top: 0;
-        right: 0;
-        left: 0;
-        bottom: 50%;
-        border-style: solid;
-        background-color: rgba(116,218,223, 1); 
-        border-color: rgba(89,90,125, 1);
-        border-width: 2px;
-        text-align:center;
-      }
-
-      #bottom_div {
-        position: absolute;
-        top: 50%;
-        right: 0;
-        left: 0;
-        bottom: 0;
-        border-style: solid;
-        background-color: rgba(116,218,223, 0.5); 
-        border-color: rgba(89,90,125, 1);
-        border-width: 2px;
-        text-align:center;
-      }
-
-      .timer{
-        height:100%;
-        display: -webkit-flexbox;
-        display: -ms-flexbox;
-        display: -webkit-flex;
-        display: flex;
-        -webkit-flex-align: center;
-        -ms-flex-align: center;
-        -webkit-align-items: center;
-        align-items: center;
-        justify-content: center;
-      }
-
-      #top{
-        -webkit-transform:rotate(-180deg);
-        -moz-transform:rotate(-180deg); 
-        -o-transform:rotate(-180deg); 
-        transform:rotate(-180deg);
-        ms-filter:"progid:DXImageTransform.Microsoft.BasicImage(rotation=2)";
-        filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
-      }
-
-      .pause{
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        margin-top: -50px;
-        margin-left: -50px;
-        height: 100px;
-        width: 100px;
-        display: flex;
-        align-items: center;
-        border-radius: 50px;
-        border-style: solid;
-        background-color: rgba(116,218,223, 1); 
-        border-color: rgba(89,90,125, 1);
-        border-width: 2px;
-        z-index: 100;
-      }
-
-    </style>  
-
-
-    <div id="container">
-
-      <div id="top_div" onclick="updateTurn(true)">
-        
-        <div class="timer"><h2 id="top"></h2></div>
-
-      </div>    
-
-      <div class="pause">
-        <span id="pauseIcon" style="margin:auto; margin-bottom: 25px; margin-left:25px; font-size:48px; display:none;" class="glyphicon glyphicon-pause" aria-hidden="true" onclick="pause()"></span>
-      <span id="backIcon" style="margin:auto; font-size:48px; display:inline-block;" class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true" onclick="pause()"></span>
+      <div id="container">
+        <div id="top_div" onclick="updateTurn(true)">
+          <div class="timer"><h2 id="top"></h2></div>
+        </div>    
+        <div class="pause">
+          <span id="pauseIcon" style="margin:auto; margin-bottom: 25px; margin-left:25px; font-size:48px; display:none;" class="glyphicon glyphicon-pause" aria-hidden="true" onclick="pause()"></span>
+          <span id="backIcon" style="margin:auto; font-size:48px; display:inline-block;" class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true" onclick="pause()"></span>
+        </div>
+        <div id="bottom_div" onclick="updateTurn(false)">
+          <div class="timer"><h2 id="bottom"></h2></div>
+        </div>
       </div>
 
-      <div id="bottom_div" onclick="updateTurn(false)">
-
-        <div class="timer"><h2 id="bottom"></h2></div>
-
-      </div>
-
-      </div>
       <script type="text/javascript">
         updateOne();
         updateTwo();
       </script>
-
     </body>
- 
   </html>

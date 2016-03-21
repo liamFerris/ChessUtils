@@ -2,7 +2,6 @@
   <html>
     <head>
       <title>ChessT Play</title>
-      <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"  media="screen,projection"/>
       <link type="text/css" rel="stylesheet" href="css/chessboard-0.3.0.css"/>
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -15,126 +14,114 @@
       <script type="text/javascript" src="js/chessboard-0.3.0.js"></script>
       <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script> 
       <script type="text/javascript" src="js/jquery-ui-1.8.24.custom.min.js"></script> 
+      <script type="text/javascript">
 
-    <!--NAVBAR-->
-    <nav class="navbar navbar-default">
-      <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="index.html">ChessT Play</a>
-        </div>
-      <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="clock.html">Clock</a></li>
-            <li><a href="engine.html">Engine</a></li>
-            <li><a href="play.html">Play</a></li>
-          </ul>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
-    </nav>
-
-    <div id="board" style="margin:auto;"></div>
-    <h3 style="text-align:center;">Status: <span id="status"></span></h3>
-
-    <script type="text/javascript">
-
-    var board,
-      game = new Chess(),
-      statusEl = $('#status'),
-      fenEl = $('#fen'),
-      pgnEl = $('#pgn');
-
-    // do not pick up pieces if the game is over
-    // only pick up pieces for the side to move
-    var onDragStart = function(source, piece, position, orientation) {
-      if (game.game_over() === true ||
-          (game.turn() === 'w' && piece.search(/^b/) !== -1) ||
-          (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
-        return false;
-      }
-    };
-
-    var onDrop = function(source, target) {
-      // see if the move is legal
-      var move = game.move({
-        from: source,
-        to: target,
-        promotion: 'q' // NOTE: always promote to a queen for example simplicity
-      });
-
-      // illegal move
-      if (move === null) return 'snapback';
-
-      updateStatus();
-    };
-
-    // update the board position after the piece snap 
-    // for castling, en passant, pawn promotion
-    var onSnapEnd = function() {
-      board.position(game.fen());
-    };
-
-    var updateStatus = function() {
-      var status = '';
-
-      var moveColor = 'White';
-      setTimeout(f, 500, 'white');
-      if (game.turn() === 'b') {
-        setTimeout(f, 500, 'black');
-        moveColor = 'Black';
-      }
-
-      // checkmate?
-      if (game.in_checkmate() === true) {
-        status = 'Game over, ' + moveColor + ' is in checkmate.';
-      }
-
-      // draw?
-      else if (game.in_draw() === true) {
-        status = 'Game over, drawn position';
-      }
-
-      // game still on
-      else {
-        status = moveColor + ' to move';
-
-        // check?
-        if (game.in_check() === true) {
-          status += ', ' + moveColor + ' is in check';
+        function change(page){
+          $('body').fadeOut();
+          setTimeout(changeDelay, 500, page);
         }
-      }
 
-      statusEl.html(status);
-      fenEl.html(game.fen());
-      pgnEl.html(game.pgn());
-    };
+        function changeDelay(page){
+          window.location.href = page;
+        }
 
-    var cfg = {
-      draggable: true,
-      position: 'start',
-      onDragStart: onDragStart,
-      onDrop: onDrop,
-      onSnapEnd: onSnapEnd
-    };
+      </script>
 
-    if(screen.width < screen.height){$("#board").css("width","90%");}
-        else{$("#board").css("width","30%");}
-    board = ChessBoard('board', cfg);
-    updateStatus();
+      <!--NAVBAR-->
+      <nav class="navbar navbar-default">
+        <div class="navbar-header" style="width:100%;">
+          <a class="navbar-brand " onclick="change('index.html')"><span class="glyphicon glyphicon-chevron-left"></span></a>
+          <span class="navbar-brand " style="float:right;">ChessT</span>
+        </div>
+      </nav>
 
-    function f(color){
-      board.orientation(color);
-    }
+      <div id="board" style="margin:auto;"></div>
+      <h3 style="text-align:center;">Status: <span id="status"></span></h3>
 
-    </script>
+      <script type="text/javascript">
 
+        var board,
+        game = new Chess(),
+        statusEl = $('#status'),
+        fenEl = $('#fen'),
+        pgnEl = $('#pgn');
+
+        var onDragStart = function(source, piece, position, orientation) {
+          if  (game.game_over() === true ||
+              (game.turn() === 'w' && piece.search(/^b/) !== -1) ||
+              (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
+              return false;
+          }
+        };
+
+        var onDrop = function(source, target) {
+          var move = game.move({
+            from: source,
+            to: target,
+            promotion: 'q'
+          });
+
+          // illegal move
+          if (move === null) return 'snapback';
+
+          updateStatus();
+        };
+
+        var onSnapEnd = function() {
+          board.position(game.fen());
+        };
+
+        var updateStatus = function() {
+          var status = '';
+          var moveColor = 'White';
+          setTimeout(f, 500, 'white');
+          if (game.turn() === 'b') {
+            setTimeout(f, 500, 'black');
+            moveColor = 'Black';
+          }
+
+          // checkmate?
+          if (game.in_checkmate() === true) {
+            status = 'Game over, ' + moveColor + ' is in checkmate.';
+          }
+
+          // draw?
+          else if (game.in_draw() === true) {
+            status = 'Game over, drawn position';
+          }
+
+          // game still on
+          else {
+            status = moveColor + ' to move';
+
+            // check?
+            if (game.in_check() === true) {
+              status += ', ' + moveColor + ' is in check';
+            }
+          }
+
+          statusEl.html(status);
+          fenEl.html(game.fen());
+          pgnEl.html(game.pgn());
+        };
+
+        var cfg = {
+          draggable: true,
+          position: 'start',
+          onDragStart: onDragStart,
+          onDrop: onDrop,
+          onSnapEnd: onSnapEnd
+        };
+
+        if(screen.width < screen.height){$("#board").css("width","90%");}
+            else{$("#board").css("width","30%");}
+        board = ChessBoard('board', cfg);
+        updateStatus();
+
+        function f(color){
+          board.orientation(color);
+        }
+
+      </script>
     </body>
   </html>

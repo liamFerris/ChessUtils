@@ -2,7 +2,6 @@
   <html>
     <head>
       <title>ChessT Engine</title>
-      <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"  media="screen,projection"/>
       <link type="text/css" rel="stylesheet" href="css/chessboard-0.3.0.css"/>
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -17,48 +16,51 @@
       <script type="text/javascript" src="js/garbochess.js"></script>
       <script type="text/javascript" src="js/boardui.js"></script> 
 
-    <!--NAVBAR-->
-    <nav class="navbar navbar-default">
-      <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="index.html">ChessT Engine</a>
+      <script type="text/javascript">
+
+        function change(page){
+          $('body').fadeOut();
+          setTimeout(changeDelay, 500, page);
+        }
+
+        function changeDelay(page){
+          window.location.href = page;
+        }
+
+      </script>
+
+      <!--NAVBAR-->
+      <nav class="navbar navbar-default">
+        <div class="navbar-header" style="width:100%;">
+          <a class="navbar-brand " onclick="change('index.html')"><span class="glyphicon glyphicon-chevron-left"></span></a>
+          <span class="navbar-brand " style="float:right;">ChessT</span>
         </div>
-      <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="clock.html">Clock</a></li>
-            <li><a href="engine.html">Engine</a></li>
-            <li><a href="play.html">Play</a></li>
-          </ul>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
-    </nav>
+      </nav>
 
-    <div class="container" style="width:100%;">
-      <h2 style="text-align:center;" id="out"></h2>
-    </div>
-
-    <div id="chessboard" style="margin:auto;"></div>
-    <br>
-    <div class="container">
-      <div class="span2">
-        <input type="button" id="engineBtn" class="btn btn-primary btn-block" value="Engine" />
-        <input type="button" id="startBtn" class="btn btn-primary btn-block" value="Start" onclick="Start()" />
-        <input type="button" id="clearBtn" class="btn btn-primary btn-block" value="Clear" onclick="Clear()" />
-        <input type="button" id="flipBtn" class="btn btn-primary btn-block" value="Flip Board" onclick="chessboard.flip()" />
-       
+      <!--ENGINE OUTPUT-->
+      <div class="container" style="width:100%;">
+        <h2 style="text-align:center;" id="out"></h2>
       </div>
-    </div>
-    <br>
-    <div class="container">
+
+      <!--CHESSBOARD-->
+      <div id="chessboard" style="margin:auto;"></div>
+
+      <br>
+
+      <!--BUTTONS-->
+      <div class="container">
+        <div class="span2">
+          <input type="button" id="engineBtn" class="btn btn-primary btn-block" value="Engine" />
+          <input type="button" id="startBtn" class="btn btn-primary btn-block" value="Start" onclick="Start()" />
+          <input type="button" id="clearBtn" class="btn btn-primary btn-block" value="Clear" onclick="Clear()" />
+          <input type="button" id="flipBtn" class="btn btn-primary btn-block" value="Flip Board" onclick="chessboard.flip()" />
+        </div>
+      </div>
+
+      <br>
+
+      <!--CHECKBOXES-->
+      <div class="container">
         <div class="col-md-2"></div>
         <label class="col-md-2"><input id="woo" type="checkbox"> White O-O</label>
         <label class="col-md-2"><input id="wooo" type="checkbox"> White O-O-O</label>
@@ -69,107 +71,108 @@
         <label class="col-md-2"><input id="wt" type="radio" name="turn" checked> White Turn</label>
         <label class="col-md-2"><input id="bt" type="radio" name="turn"> Black Turn</label>
         <div class="col-md-4"></div>
-    </div>
+      </div>
       
       
-  <script type="text/javascript">
-      $(document).ready(function () {
+      <script type="text/javascript">
+        $(document).ready(function () {
           g_timeout = 1000;
           UINewGame();
-      });
-    </script> 
+        });
+      </script> 
 
-        <div style="display:none;">
-        <div id='board'></div>  
-        <textarea id='PgnTextBox'></textarea>
-        <a id='AnalysisToggleLink' href="javascript:UIAnalyzeToggle()">Analysis: Off</a>
-        <span id='output'></span>
-        <input id='FenTextBox' onchange="javascript:UIChangeFEN()"/>
-        </div> 
+      <!--HIDDEN I/O FOR GARBOCHESS-->
+      <div style="display:none;">
+      <div id='board'></div>  
+      <textarea id='PgnTextBox'></textarea>
+      <a id='AnalysisToggleLink' href="javascript:UIAnalyzeToggle()">Analysis: Off</a>
+      <span id='output'></span>
+      <input id='FenTextBox' onchange="javascript:UIChangeFEN()"/>
+      </div> 
     
-    <script type="text/javascript">
-      if(screen.width < screen.height){$("#chessboard").css("width","90%");}
+      <script type="text/javascript">
+
+        if(screen.width < screen.height){$("#chessboard").css("width","90%");}
         else{$("#chessboard").css("width","30%");}
-      var chessboard = ChessBoard('chessboard', {
-        draggable: true,
-        dropOffBoard: 'trash',
-        sparePieces: true
-      });
-      $('#startBtn').on('click', chessboard.start);
-      $('#clearBtn').on('click', chessboard.clear);
-      $('#engineBtn').click(analyse);
+        var chessboard = ChessBoard('chessboard', {
+          draggable: true,
+          dropOffBoard: 'trash',
+          sparePieces: true
+        });
+        $('#startBtn').on('click', chessboard.start);
+        $('#clearBtn').on('click', chessboard.clear);
+        $('#engineBtn').click(analyse);
 
-      function Start(){
-        console.log("d");
-        $('#woo').prop('checked', true);
-        $('#wooo').prop('checked', true);
-        $('#boo').prop('checked', true);
-        $('#booo').prop('checked', true);
-      }
-
-      function Clear(){
-        $('#woo').prop('checked', false);
-        $('#wooo').prop('checked', false);
-        $('#boo').prop('checked', false);
-        $('#booo').prop('checked', false);
-      }
-
-      function analyse(){
-        var fen = chessboard.position('fen')
-        if ($('#wt').is(':checked')){fen += " w ";}
-        if ($('#bt').is(':checked')){fen += " b ";}
-        if ($('#woo').is(':checked')){fen += "K";}
-        if ($('#wooo').is(':checked')){fen += "Q";}
-        if ($('#boo').is(':checked')){fen += "k";}
-        if ($('#booo').is(':checked')){fen += "q";}
-        fen += " -"
-        
-        $('#FenTextBox').val(fen);
-        UIChangeFEN();
-        UIAnalyzeToggle();
-        console.log(fen);
-        $('#engineBtn').attr("disabled", true);
-        setTimeout(finish, 5000);
-        setTimeout(p, 500);
-      }
-
-      function p(){
-        var out = $('#output').text();
-        var sbstring = out.substring(out.indexOf("Score:")+6, out.indexOf("Score:")+12);
-        var score = parseInt(sbstring);
-        console.log(out);
-        console.log(sbstring);
-        console.log(score);
-        var n = score / 1000;
-        if (n < 0){
-          if ($('#bt').is(':checked')){n = Math.abs(n); n = "+" + n;}
-          else{n = Math.abs(n); n = "-" + n;}
+        function Start(){
+          console.log("d");
+          $('#woo').prop('checked', true);
+          $('#wooo').prop('checked', true);
+          $('#boo').prop('checked', true);
+          $('#booo').prop('checked', true);
         }
-        else if (n > 0){
-          if ($('#wt').is(':checked')){n = "+" + n;}
-          else{n = "-" + n;}
-        }
-        $('#out').text(n);
-      }
 
-      function finish(){
-        var out = $('#output').text();
-        var sbstring = out.substring(out.indexOf("Score:")+6, out.indexOf("Score:")+12);
-        var score = parseInt(sbstring);
-        var n = score / 1000;
-        if (n < 0){
-          if ($('#bt').is(':checked')){n = Math.abs(n); n = "+" + n;}
-          else{n = Math.abs(n); n = "-" + n;}
+        function Clear(){
+          $('#woo').prop('checked', false);
+          $('#wooo').prop('checked', false);
+          $('#boo').prop('checked', false);
+          $('#booo').prop('checked', false);
         }
-        else if(n > 0){
-          if ($('#wt').is(':checked')){n = "+" + n;}
-          else{n = "-" + n;}
-        }
-        $('#out').text(n);
-        UIAnalyzeToggle();
-        $('#engineBtn').attr("disabled", false);
-      }
-    </script>  
 
+        function analyse(){
+          var fen = chessboard.position('fen')
+          if ($('#wt').is(':checked')){fen += " w ";}
+          if ($('#bt').is(':checked')){fen += " b ";}
+          if ($('#woo').is(':checked')){fen += "K";}
+          if ($('#wooo').is(':checked')){fen += "Q";}
+          if ($('#boo').is(':checked')){fen += "k";}
+          if ($('#booo').is(':checked')){fen += "q";}
+          fen += " -"
+          $('#FenTextBox').val(fen);
+          UIChangeFEN();
+          UIAnalyzeToggle();
+          console.log(fen);
+          $('#engineBtn').attr("disabled", true);
+          setTimeout(finish, 5000);
+          setTimeout(p, 500);
+        }
+
+        function p(){
+          var out = $('#output').text();
+          var sbstring = out.substring(out.indexOf("Score:")+6, out.indexOf("Score:")+12);
+          var score = parseInt(sbstring);
+          console.log(out);
+          console.log(sbstring);
+          console.log(score);
+          var n = score / 1000;
+          if (n < 0){
+            if ($('#bt').is(':checked')){n = Math.abs(n); n = "+" + n;}
+            else{n = Math.abs(n); n = "-" + n;}
+          }
+          else if (n > 0){
+            if ($('#wt').is(':checked')){n = "+" + n;}
+            else{n = "-" + n;}
+          }
+          $('#out').text(n);
+        }
+
+        function finish(){
+          var out = $('#output').text();
+          var sbstring = out.substring(out.indexOf("Score:")+6, out.indexOf("Score:")+12);
+          var score = parseInt(sbstring);
+          var n = score / 1000;
+          if (n < 0){
+            if ($('#bt').is(':checked')){n = Math.abs(n); n = "+" + n;}
+            else{n = Math.abs(n); n = "-" + n;}
+          }
+          else if(n > 0){
+            if ($('#wt').is(':checked')){n = "+" + n;}
+            else{n = "-" + n;}
+          }
+          $('#out').text(n);
+          UIAnalyzeToggle();
+          $('#engineBtn').attr("disabled", false);
+        }
+
+      </script>  
     </body>
   </html>
