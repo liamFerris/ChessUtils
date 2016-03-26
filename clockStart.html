@@ -84,13 +84,13 @@
           updateTwo();
           if(Onesec == 0 && Onemin == 0 ){
             gameStarted = false; 
-            alert("Player Two wins");
+            win("Two");
             $('#pauseIcon').css("display","none");
             $('#backIcon').css("display","inline-block");
           }
           if(Twosec == 0 && Twomin == 0 ){
             gameStarted = false; 
-            alert("Player One wins");
+            win("One");
             $('#pauseIcon').css("display","none");
             $('#backIcon').css("display","inline-block");
           }
@@ -118,6 +118,14 @@
             if (!results) return null;
             if (!results[2]) return '';
             return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        function win(out){
+          //#D81159
+          $("#bottom_div").css("background-color","#D81159");
+          $("#top_div").css("background-color","#D81159");
+          $("#bottom").text("Player " + out + " Won!");
+          $("#top").text("Player " + out + " Won!");
         }
 
       </script>
@@ -195,7 +203,7 @@
           background-color: rgba(116,218,223, 1); 
           border-color: rgba(89,90,125, 1);
           border-width: 2px;
-          z-index: 100;
+          z-index: 80;
         }
 
         #backIcon{
