@@ -70,6 +70,8 @@
         </div>
       </div>
 
+      <div id="output"></div>
+
       <canvas id="can"></canvas>
 
       <div id="img-out"></div>
@@ -160,8 +162,11 @@
           };
 
 
-        if(screen.width < screen.height){$("#board").css("width","90%");}
-            else{$("#board").css("width","30%");}
+        if(screen.width < screen.height){$("#board").css("width","90%");
+        $("#output").css("width","90%");}
+            else{$("#board").css("width","30%");$("#output").css("width","30%");}
+
+            $("#output").css("height",$("#board").width());
             board = ChessBoard('board', cfg);
             updateStatus();
 
@@ -198,14 +203,12 @@
         }
 
         function f(){
-          console.log("d");
           encoder.finish();
           var binary_gif = encoder.stream().getData() //notice this is different from the as3gif package!
           var data_url = 'data:image/gif;base64,'+encode64(binary_gif);
 
-          console.log(binary_gif);
-          console.log(data_url);
-          window.location.href = data_url;
+          //window.location.href = data_url;
+          $('#output').css("background-image", "url(" + data_url + ")");
 
         }
           
