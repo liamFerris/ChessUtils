@@ -17,7 +17,10 @@
       <script type="text/javascript" src="js/html2canvas.js"></script>
       <script type="text/javascript" src="js/base64.js"></script>
       <script type="text/javascript" src="js/canvas2image.js"></script>
-      <script type="text/javascript" src="js/gif.js"></script>
+      <script type="text/javascript" src="js/LZWEncoder.js"></script>
+      <script type="text/javascript" src="js/NeuQuant.js"></script>
+      <script type="text/javascript" src="js/GIFEncoder.js"></script>
+      <script type="text/javascript" src="js/b64.js"></script>
       <script type="text/javascript">
 
         function change(page){
@@ -69,7 +72,10 @@
 
       <script type="text/javascript">
 
-
+          var encoder = new GIFEncoder();
+          encoder.setRepeat(0); //0  -> loop forever
+                        //1+ -> loop n times then stop
+          encoder.setDelay(500); //go to next frame every n milliseconds
 
           var board,
             game = new Chess(),
@@ -164,13 +170,27 @@
 
         function gifgo(){
 
+          encoder.start();
+
           arr.push(board.position('fen'));
 
           for (i = 1; i < arr.length; i++) { 
               console.log(i);
               setTimeout(ch, i*1000, i);
           }
-          //setTimeout(f, arr.length*1000 + 500);
+          setTimeout(f, arr.length*1000 + 500);
+        }
+
+        function f(){
+          console.log("d");
+          encoder.finish();
+          var binary_gif = encoder.stream().getData() //notice this is different from the as3gif package!
+          var data_url = 'data:image/gif;base64,'+encode64(binary_gif);
+
+          console.log(binary_gif);
+          console.log(data_url);
+          window.location.href = data_url;
+
         }
           
 
@@ -183,12 +203,11 @@
               onrendered: function(canvas) {
                 theCanvas = canvas;
                 document.body.appendChild(canvas);
+                var context = canvas.getContext('2d');
+                encoder.addFrame(context);
 
                 // Convert and download as image 
                 $("#img-out").append(canvas);
-
-                  gif.addFrame(canvas, {delay: 200});
-
 
                 // Clean up 
                 //document.body.removeChild(canvas);
