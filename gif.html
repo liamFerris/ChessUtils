@@ -1,7 +1,7 @@
 <!DOCTYPE html>
   <html>
     <head>
-      <title>ChessT Play</title>
+      <title>ChessT Gif</title>
       <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"  media="screen,projection"/>
       <link type="text/css" rel="stylesheet" href="css/chessboard-0.3.0.css"/>
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -58,10 +58,15 @@
       <div id="board" style="margin:auto;"></div>
       <h3 style="text-align:center;">Status: <span id="status"></span></h3>
 
-
       <div class="container">
         <div class="span2">
-          <input type="button" id="gifBtn" class="btn btn-primary btn-block" value="Go" onclick="gifgo()" />
+          
+          <input type="number" id="delay" style="margin-top:5px;"pattern="[0-9]*" inputmode="numeric" id="delay" class="form-control" placeholder="Delay between moves / ms">
+          <input type="number" id="initDelay" style="margin-top:5px;"pattern="[0-9]*" inputmode="numeric" id="initdelay" class="form-control" placeholder="Initial Delay / ms">
+          <input type="button" style="margin-top:5px;"id="resetBtn" class="btn btn-primary btn-block" value="Reset starting position" onclick="reset()" />
+          <input type="button" id="gifBtn" class="btn btn-success btn-block" value="Go" onclick="gifgo()" />
+          
+
         </div>
       </div>
 
@@ -69,13 +74,9 @@
 
       <div id="img-out"></div>
 
-
       <script type="text/javascript">
 
           var encoder = new GIFEncoder();
-          encoder.setRepeat(0); //0  -> loop forever
-                        //1+ -> loop n times then stop
-          encoder.setDelay(500); //go to next frame every n milliseconds
 
           var board,
             game = new Chess(),
@@ -166,15 +167,30 @@
 
             function f(color){
               board.orientation(color);
-            }  
+            } 
+
+        function reset(){
+
+          arr = [];
+          arr.push(board.position('fen'));
+
+        } 
 
         function gifgo(){
+
+          
+          encoder.setRepeat(-1); //0  -> loop forever
+                        //1+ -> loop n times then stop
+
+          var delay = parseInt($("#delay").val()) || 1000;
+
+          encoder.setDelay(delay); //go to next frame every n milliseconds
 
           encoder.start();
 
           arr.push(board.position('fen'));
 
-          for (i = 1; i < arr.length; i++) { 
+          for (i = 1; i <= arr.length; i++) { 
               console.log(i);
               setTimeout(ch, i*1000, i);
           }
