@@ -21,6 +21,8 @@
       <script type="text/javascript" src="js/NeuQuant.js"></script>
       <script type="text/javascript" src="js/GIFEncoder.js"></script>
       <script type="text/javascript" src="js/b64.js"></script>
+      <script type="text/javascript" src="js/gif.js"></script>
+      <script type="text/javascript" src="js/gif.worker.js"></script>
       <script type="text/javascript">
 
         function change(page){
@@ -70,15 +72,21 @@
         </div>
       </div>
 
-      <div id="output"></div>
+      <br>
+      <div class="container">
+        <img id="something"/>
+      </div>
+      <br>
 
-      <canvas id="can"></canvas>
-
-      <div id="img-out"></div>
 
       <script type="text/javascript">
 
-          var encoder = new GIFEncoder();
+          var gif = new GIF({
+            workers:5,
+            quality:10,
+
+          });
+          //var encoder = new GIFEncoder();
 
           var board,
             game = new Chess(),
@@ -162,11 +170,9 @@
           };
 
 
-        if(screen.width < screen.height){$("#board").css("width","90%");
-        $("#output").css("width","90%");}
-            else{$("#board").css("width","30%");$("#output").css("width","30%");}
+        if(screen.width < screen.height){$("#board").css("width","90%");}
+            else{$("#board").css("width","30%");}
 
-            $("#output").css("height",$("#board").width());
             board = ChessBoard('board', cfg);
             updateStatus();
 
@@ -184,49 +190,68 @@
         function gifgo(){
 
           
-          encoder.setRepeat(-1); //0  -> loop forever
+          gif.repeat = 0; //0  -> loop forever
                         //1+ -> loop n times then stop
 
           var delay = parseInt($("#delay").val()) || 1000;
 
-          encoder.setDelay(delay); //go to next frame every n milliseconds
+          //encoder.setDelay(delay); //go to next frame every n milliseconds
 
-          encoder.start();
+          //gif.start();
 
           arr.push(board.position('fen'));
 
-          for (i = 1; i <= arr.length; i++) { 
-              console.log(i);
+          for (i = 1; i < arr.length; i++) {
               setTimeout(ch, i*1000, i);
           }
           setTimeout(f, arr.length*1000 + 500);
         }
 
         function f(){
-          encoder.finish();
-          var binary_gif = encoder.stream().getData() //notice this is different from the as3gif package!
-          var data_url = 'data:image/gif;base64,'+encode64(binary_gif);
+          //gif.finish();
+          gif.on('finished', function(blob) {
+            //window.open("www.google.com", '_blank', 'location=yes');
+            //window.open(URL.createObjectURL(blob));
+
+            //console.log(URL.createObjectURL(blob));
+            //window.location.href = URL.createObjectURL(blob); 
+            
+            var image = document.getElementById('something');
+            image.src = URL.createObjectURL(blob);
+
+
+
+
+          });
+
+          gif.render();
+
+          //var binary_gif = gif.stream().getData(); //notice this is different from the as3gif package!
+          //var data_url = 'data:image/gif;base64,'+encode64(binary_gif);
+
+          //alert(data_url);
+
+          //var image = document.getElementById('something');
+          //image.src = data_url;
 
           //window.location.href = data_url;
-          $('#output').css("background-image", "url(" + data_url + ")");
+          //$('#output').css("background-image", "url(" + data_url + ")");
 
-        }
-          
-
+        } 
 
         function ch(i){
-          console.log("e");
-          console.log(arr[i])
           
           html2canvas($("#board"), {
               onrendered: function(canvas) {
                 theCanvas = canvas;
-                document.body.appendChild(canvas);
+                //document.body.appendChild(canvas);
+
                 var context = canvas.getContext('2d');
-                encoder.addFrame(context);
+                
+                gif.addFrame(canvas, {delay:1000});
 
                 // Convert and download as image 
-                $("#img-out").append(canvas);
+                //$("#img-out").append(canvas);
 
                 // Clean up 
                 //document.body.removeChild(canvas);
@@ -234,11 +259,17 @@
         });
           board.position(arr[i],false);
 
-          }
+          }  
 
+          function saveImg(){
 
-
-        
+            var url = $('something').attr('src');
+              cordova.plugins.saveToPhotoAlbum.save(url, function(nativeURL){
+                  console.log(nativeURL);
+              }, function(err){
+                  console.error(err);
+              });
+            }
 
 /*
           $(function() { 
