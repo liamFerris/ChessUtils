@@ -183,8 +183,6 @@
           gif.repeat = 0; //0  -> loop forever
                         //1+ -> loop n times then stop
 
-          var delay = parseInt($("#delay").val()) || 1000;
-
           //encoder.setDelay(delay); //go to next frame every n milliseconds
 
           //gif.start();
@@ -237,8 +235,8 @@
 
                 var delay = 1000;
                 if(i == 0){
-                  delay = $('#initDelay').val() || 1000;
-                }else{delay = $('#delay').val() || 1000;}
+                  delay = parseInt($('#initDelay').val()) || 1000;
+                }else{delay = parseInt($('#delay').val()) || 1000;}
 
 
                 //document.body.appendChild(canvas);
