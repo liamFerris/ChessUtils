@@ -60,36 +60,36 @@
 
       <div id="board" style="margin:auto;"></div>
       <h3 style="text-align:center;">Status: <span id="status"></span></h3>
+      <h3 style="text-align:center;">PGN: <span id="pgn"></span></h3>
 
       <div class="container">
-        <div class="span2">
-          
+        <div class="span2"> 
           <input type="number" id="delay" style="margin-top:5px;"pattern="[0-9]*" inputmode="numeric" id="delay" class="form-control" placeholder="Delay between moves / ms">
           <input type="number" id="initDelay" style="margin-top:5px;"pattern="[0-9]*" inputmode="numeric" id="initdelay" class="form-control" placeholder="Initial Delay / ms">
           <input type="button" style="margin-top:5px;"id="resetBtn" class="btn btn-primary btn-block" value="Reset starting position" onclick="reset()" />
           <input type="button" id="gifBtn" class="btn btn-success btn-block" value="Go" onclick="gifgo()" />
         </div>
       </div>
-
       <br>
+
       <div class="container" style="width:100%;">
         <img style="margin:auto; display:block;" id="something"/>
       </div>
       <br>
-
 
       <script type="text/javascript">
           var gif = new GIF({
             workers:5,
             quality:10,
           });
-          //var encoder = new GIFEncoder();
+
           var board,
             game = new Chess(),
             statusEl = $('#status'),
             fenEl = $('#fen'),
             pgnEl = $('#pgn');
             var arr =[];
+
           // do not pick up pieces if the game is over
           // only pick up pieces for the side to move
           var onDragStart = function(source, piece, position, orientation) {
@@ -99,6 +99,7 @@
               return false;
             }
           };
+
           var onDrop = function(source, target) {
             // see if the move is legal
             var move = game.move({
@@ -110,6 +111,7 @@
             if (move === null) return 'snapback';
             updateStatus();
           };
+
           // update the board position after the piece snap 
           // for castling, en passant, pawn promotion
           var onSnapEnd = function() {
