@@ -1,140 +1,155 @@
 <!DOCTYPE html>
-  <html>
-    <head>
-      <title>ChessT Play</title>
-      <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"  media="screen,projection"/>
-      <link type="text/css" rel="stylesheet" href="css/chessboard-0.3.0.css"/>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
+<html>
+  <head>
+    <title>ChessT Play</title>
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="css/chessboard-0.3.0.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  </head>
 
-    <body>
-      <script src="js/chess.js"></script>
-      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-      <script type="text/javascript" src="js/bootstrap.min.js"></script>
-      <script type="text/javascript" src="js/chessboard-0.3.0.js"></script>
-      <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script> 
-      <script type="text/javascript" src="js/jquery-ui-1.8.24.custom.min.js"></script> 
-      <script type="text/javascript">
+  <body>
+    <script src="js/chess.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/chessboard-0.3.0.js"></script>
+    <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script> 
+    <script type="text/javascript" src="js/jquery-ui-1.8.24.custom.min.js"></script> 
+    <script type="text/javascript">
 
-        function change(page){
-          $('body').fadeOut();
-          setTimeout(changeDelay, 500, page);
-        }
-
-        function changeDelay(page){
-          window.location.href = page;
-        }
-
-      </script>
-
-      <style type="text/css">
-
-      @font-face {
-        font-family: 'Poiret One';
-        src: url('img/PoiretOne-Regular.ttf');
-        }
-
-      body{
-        font-family: Poiret One;
+      function change(page){
+        $('body').fadeOut();
+        setTimeout(changeDelay, 500, page);
       }
 
-      </style>
+      function changeDelay(page){
+        window.location.href = page;
+      }
 
-      <!--NAVBAR-->
-      <nav class="navbar navbar-default">
-        <div class="navbar-header" style="width:100%;">
-          <a class="navbar-brand " onclick="change('index.html')"><span class="glyphicon glyphicon-chevron-left"></span></a>
-          <span class="navbar-brand " style="float:right;">ChessT</span>
-        </div>
-      </nav>
+    </script>
 
+    <style type="text/css">
+
+    @font-face {
+      font-family: 'Poiret One';
+      src: url('img/PoiretOne-Regular.ttf');
+      }
+
+    body{
+      font-family: Poiret One;
+      background-color: #e7e7e7;
+    }
+
+    .card{
+      margin: auto;
+      margin-top: 4px;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      width: 90%;
+      text-align: center;
+      border-radius: 8px;
+      background-color: white;
+      box-shadow: 5px 5px 5px #888888;
+    }
+
+    </style>
+
+    <!--NAVBAR-->
+    <nav class="navbar navbar-default">
+      <div class="navbar-header" style="width:100%;">
+        <a class="navbar-brand " onclick="change('index.html')"><span class="glyphicon glyphicon-chevron-left"></span></a>
+        <span class="navbar-brand " style="float:right;">ChessT</span>
+      </div>
+    </nav>
+
+    <div class="card">
       <div id="board" style="margin:auto;"></div>
       <h3 style="text-align:center;">Status: <span id="status"></span></h3>
+    </div>
 
-      <script type="text/javascript">
+    <script type="text/javascript">
 
-        var board,
-        game = new Chess(),
-        statusEl = $('#status'),
-        fenEl = $('#fen'),
-        pgnEl = $('#pgn');
+      var board,
+      game = new Chess(),
+      statusEl = $('#status'),
+      fenEl = $('#fen'),
+      pgnEl = $('#pgn');
 
-        var onDragStart = function(source, piece, position, orientation) {
-          if  (game.game_over() === true ||
-              (game.turn() === 'w' && piece.search(/^b/) !== -1) ||
-              (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
-              return false;
-          }
-        };
+      var onDragStart = function(source, piece, position, orientation) {
+        if  (game.game_over() === true ||
+            (game.turn() === 'w' && piece.search(/^b/) !== -1) ||
+            (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
+            return false;
+        }
+      };
 
-        var onDrop = function(source, target) {
-          var move = game.move({
-            from: source,
-            to: target,
-            promotion: 'q'
-          });
+      var onDrop = function(source, target) {
+        var move = game.move({
+          from: source,
+          to: target,
+          promotion: 'q'
+        });
 
-          // illegal move
-          if (move === null) return 'snapback';
+        // illegal move
+        if (move === null) return 'snapback';
 
-          updateStatus();
-        };
-
-        var onSnapEnd = function() {
-          board.position(game.fen());
-        };
-
-        var updateStatus = function() {
-          var status = '';
-          var moveColor = 'White';
-          setTimeout(f, 500, 'white');
-          if (game.turn() === 'b') {
-            setTimeout(f, 500, 'black');
-            moveColor = 'Black';
-          }
-
-          // checkmate?
-          if (game.in_checkmate() === true) {
-            status = 'Game over, ' + moveColor + ' is in checkmate.';
-          }
-
-          // draw?
-          else if (game.in_draw() === true) {
-            status = 'Game over, drawn position';
-          }
-
-          // game still on
-          else {
-            status = moveColor + ' to move';
-
-            // check?
-            if (game.in_check() === true) {
-              status += ', ' + moveColor + ' is in check';
-            }
-          }
-
-          statusEl.html(status);
-          fenEl.html(game.fen());
-          pgnEl.html(game.pgn());
-        };
-
-        var cfg = {
-          draggable: true,
-          position: 'start',
-          onDragStart: onDragStart,
-          onDrop: onDrop,
-          onSnapEnd: onSnapEnd
-        };
-
-        if(screen.width < screen.height){$("#board").css("width","90%");}
-            else{$("#board").css("width","30%");}
-        board = ChessBoard('board', cfg);
         updateStatus();
+      };
 
-        function f(color){
-          board.orientation(color);
+      var onSnapEnd = function() {
+        board.position(game.fen());
+      };
+
+      var updateStatus = function() {
+        var status = '';
+        var moveColor = 'White';
+        setTimeout(f, 500, 'white');
+        if (game.turn() === 'b') {
+          setTimeout(f, 500, 'black');
+          moveColor = 'Black';
         }
 
-      </script>
-    </body>
-  </html>
+        // checkmate?
+        if (game.in_checkmate() === true) {
+          status = 'Game over, ' + moveColor + ' is in checkmate.';
+        }
+
+        // draw?
+        else if (game.in_draw() === true) {
+          status = 'Game over, drawn position';
+        }
+
+        // game still on
+        else {
+          status = moveColor + ' to move';
+
+          // check?
+          if (game.in_check() === true) {
+            status += ', ' + moveColor + ' is in check';
+          }
+        }
+
+        statusEl.html(status);
+        fenEl.html(game.fen());
+        pgnEl.html(game.pgn());
+      };
+
+      var cfg = {
+        draggable: true,
+        position: 'start',
+        onDragStart: onDragStart,
+        onDrop: onDrop,
+        onSnapEnd: onSnapEnd
+      };
+
+      if(screen.width < screen.height){$("#board").css("width","90%");}
+          else{$("#board").css("width","30%");}
+      board = ChessBoard('board', cfg);
+      updateStatus();
+
+      function f(color){
+        board.orientation(color);
+      }
+
+    </script>
+  </body>
+</html>

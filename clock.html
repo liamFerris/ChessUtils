@@ -39,9 +39,22 @@
 
       body{
         font-family: Poiret One;
+        background-color: #e7e7e7;
       }
 
-      </style>
+      .card{
+        margin: auto;
+        margin-top: 4px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        width: 90%;
+        text-align: center;
+        border-radius: 8px;
+        background-color: white;
+        box-shadow: 5px 5px 5px #888888;
+      }
+        
+    </style>
 
       <!--NAVBAR-->
       <nav class="navbar navbar-default">
@@ -52,34 +65,27 @@
       </nav>
 
       <!--INPUT BOXES & BUTTON-->
-      <div class="container-fluid">
+      <div class="card">
         <h2 class="form-signin-heading" style="text-align:center;">Select your time</h2>
-        <div class="col-md-2"></div>
-        <div class="col-md-2">
+        
           <label for="inputTimeMin" class="sr-only">Starting time</label>
-          <input type="number" pattern="[0-9]*" inputmode="numeric" id="inputTimeMin" class="form-control" placeholder="Minutes">
-        </div>
-        <div class="col-md-1">
-          <div style="width:100%; text-align:center;"><h2 style="margin-top:0px; margin-bottom:0px;">:</h2></div>
-        </div>
-        <div class="col-md-2">
+          <input style="width:25%; display:inline-block;" type="number" pattern="[0-9]*" inputmode="numeric" id="inputTimeMin" class="form-control" placeholder="Minutes">
+        
+          <div style="width:5%; text-align:center; display:inline-block;"><h2 style="margin-top:0px; margin-bottom:0px;">:</h2></div>
+        
           <label for="inputTimeSec" class="sr-only">Starting time</label>
-          <input type="number" pattern="[0-9]*" inputmode="numeric" id="inputTimeSec" class="form-control" placeholder="Seconds">
-        </div>
-        <div class="col-md-1">
-          <div style="width:100%; text-align:center;"><h2 style="margin-top:0px; margin-bottom:0px;">+</h2></div>
-        </div>
-        <div class="col-md-2">
+          <input style="width:25%; display:inline-block;" type="number" pattern="[0-9]*" inputmode="numeric" id="inputTimeSec" class="form-control" placeholder="Seconds">
+        
+          <div style="width:5%; text-align:center; display:inline-block;"><h2 style="margin-top:0px; margin-bottom:0px;">+</h2></div>
+        
           <label for="inputInc" class="sr-only">Increment/label></label>
-          <input type="number" pattern="[0-9]*" inputmode="numeric" id="inputInc" class="form-control" placeholder="Increment">
-        </div>
+          <input style="width:25%; display:inline-block;" type="number" pattern="[0-9]*" inputmode="numeric" id="inputInc" class="form-control" placeholder="Increment">
+
         <br>
         <br>
-        <div class="col-md-5"></div>
-        <div class="col-md-2">
-          <button class="btn btn-primary btn-block" type="submit" onclick="StartClock()">Start</button>
-        </div>
-        <div class="col-md-5"></div>
+        
+          <button style="width:50%; margin:auto;" class="btn btn-primary btn-block" type="submit" onclick="StartClock()">Start</button>
+        
       </div>
     </body>
   </html>

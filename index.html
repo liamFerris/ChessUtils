@@ -1,35 +1,35 @@
 <!DOCTYPE html>
-  <html>
-    <head>
-      <title>ChessT Home</title>
-      <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"  media="screen,projection"/>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
+<html>
+  <head>
+    <title>ChessT Home</title>
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"  media="screen,projection"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  </head>
 
-    <body>
-      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-      <script type="text/javascript" src="js/bootstrap.min.js"></script>
-      <script type="text/javascript">
+  <body>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript">
 
-        function change(page){
-          $('body').fadeOut();
-          setTimeout(changeDelay, 500, page);
-        }
+      function change(page){
+        $('body').fadeOut();
+        setTimeout(changeDelay, 500, page);
+      }
 
-        function changeDelay(page){
-          window.location.href = page;
-        }
+      function changeDelay(page){
+        window.location.href = page;
+      }
 
-      </script>
+    </script>
 
-      <!--NAVBAR-->
-      <nav class="navbar navbar-default" style="margin:0px;">
-        <div class="navbar-header" style="width:100%;">
-          <span class="navbar-brand " style="float:right;">ChessT</span>
-        </div>
-      </nav>
+    <!--NAVBAR-->
+    <nav class="navbar navbar-default" style="margin:0px;">
+      <div class="navbar-header" style="width:100%;">
+        <span class="navbar-brand " style="float:right;">ChessT</span>
+      </div>
+    </nav>
 
-      <style type="text/css">
+    <style type="text/css">
 
       @font-face {
         font-family: 'Poiret One';
@@ -38,66 +38,73 @@
 
       body{
         font-family: Poiret One;
+        background-color: #e7e7e7;
       }
 
-      </style>
-      
-        <div style=" background-color: white; opacity:0.6; width:100%;">
-        <a onclick="change('engine.html')" style="text-decoration: none; color:black;">
-          <div style="width:40%; margin:auto;">
-            <img style="margin:auto; display:block; width:90%; padding:5%;" src="img/gear.svg"/>
-            <h2 style="margin:auto; text-align:center; display:block;" >Engine</h2>
-          </div>
-          <p style="margin:auto; text-align:center; display:block;">Analysis board with no restrictions</p>
-        </a>
+    .card{
+      opacity:0.6;
+      margin: auto;
+      margin-top: 4px;
+      padding-top: 8px;
+      padding-bottom: 32px;
+      width: 90%;
+      text-align: center;
+      border-radius: 8px;
+      background-color: white;
+      box-shadow: 5px 5px 5px #888888;
+      }
+
+    </style>
+
+    <div class="card">
+      <a onclick="change('engine.html')" style="text-decoration: none; color:black;">
+        <div style="width:40%; margin:auto;">
+          <img style="margin:auto; display:block; width:90%; padding:5%;" src="img/gear.svg"/>
+          <h2 style="margin:auto; display:block;" >Engine</h2>
         </div>
-        <div style="width:80%; margin:auto; height:1px; background-color:#D81159;"></div>
-        <br>        
+        <p style="margin:auto; display:block;">Analysis board with no restrictions</p>
+      </a>
+    </div>    
 
-        <div style=" background-color: white; opacity:0.7;">
-        <a onclick="change('clock.html')" style="text-decoration: none; background-color: none; color:black;">
-          <div style="width:40%; margin:auto;">
-            <img style="margin:auto; display:block;  width:90%; padding:5%;" src="img/clock.svg"/>
-            <h2 style="margin:auto; text-align:center; display:block;" >Clock</h2>
-          </div>
-          <p style="margin:auto; text-align:center; display:block;">Define your own custom chess clock.</p>
-        </a>
-      </div>
-      <div style="width:80%; margin:auto; height:1px; background-color:#D81159;"></div>
-        <br>
+    <div class="card">
+      <a onclick="change('clock.html')" style="text-decoration: none; background-color: none; color:black;">
+        <div style="width:40%; margin:auto;">
+          <img style="margin:auto; display:block;  width:90%; padding:5%;" src="img/clock.svg"/>
+          <h2 style="margin:auto; display:block;" >Clock</h2>
+        </div>
+        <p style="margin:auto; display:block;">Define your own custom chess clock.</p>
+      </a>
+    </div>
 
-      <div style=" background-color: white; opacity:0.8;">
-        <a onclick="change('gif.html')" style="text-decoration: none; background-color: none; color:black;">
-          <div style="width:40%; margin:auto;">
-            <img style="margin:auto; display:block;  width:90%; padding:5%;" src="img/social.svg"/>
-            <h2 style="margin:auto; text-align:center; display:block;" >Gif</h2>
-          </div>
-          <p style="margin:auto; text-align:center; display:block;">Turn a game into a Gif & Tweet it.</p>
-        </a>
-      </div>
-      <div style="width:80%; margin:auto; height:1px; background-color:#D81159;"></div>
-        <br>
+    <div class="card">
+      <a onclick="change('gif.html')" style="text-decoration: none; background-color: none; color:black;">
+        <div style="width:40%; margin:auto;">
+          <img style="margin:auto; display:block;  width:90%; padding:5%;" src="img/social.svg"/>
+          <h2 style="margin:auto; display:block;" >Gif</h2>
+        </div>
+        <p style="margin:auto; display:block;">Turn a game into a Gif & Tweet it.</p>
+      </a>
+    </div>
 
-        <div style=" background-color: white; opacity:0.8;">
-        <a onclick="change('play.html')" style="text-decoration: none; background-color: none; color:black;">
-          <div style="width:40%; margin:auto;">
-            <img style="margin:auto; display:block;  width:90%; padding:5%;" src="img/icon.svg"/>
-            <h2 style="margin:auto; text-align:center; display:block;" >Play</h2>
-          </div>
-          <p style="margin:auto; text-align:center; display:block;">Play a friend</p>
-        </a>
-      </div>
-      <div style="width:80%; margin:auto; height:1px; background-color:#D81159;"></div>
-        <br>
+    <div class="card">
+      <a onclick="change('play.html')" style="text-decoration: none; background-color: none; color:black;">
+        <div style="width:40%; margin:auto;">
+          <img style="margin:auto; display:block;  width:90%; padding:5%;" src="img/icon.svg"/>
+          <h2 style="margin:auto; display:block;" >Play</h2>
+        </div>
+        <p style="margin:auto;display:block;">Play a friend</p>
+      </a>
+    </div>
 
-        <div style=" background-color: white; opacity:0.8;">
-        <a onclick="change('about.html')" style="text-decoration: none; background-color: none; color:black;">
-          <div style="width:40%; margin:auto;">
-            <h2 style="margin:auto; text-align:center; display:block;" >About</h2>
-          </div>
-        </a>
-      </div>
-      <div style="width:80%; margin:auto; height:1px; background-color:#D81159;"></div>
-        <br>
-    </body>
-  </html>
+    <div class="card">
+      <a onclick="change('about.html')" style="text-decoration: none; background-color: none; color:black;">
+        <div style="width:40%; margin:auto;">
+          <h2 style="margin:auto;display:block;" >About</h2>
+        </div>
+      </a>
+    </div>
+
+    <br>
+
+  </body>
+</html>

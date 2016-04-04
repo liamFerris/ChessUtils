@@ -1,246 +1,279 @@
 <!DOCTYPE html>
-  <html>
-    <head>
-      <title>ChessT Gif</title>
-      <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"  media="screen,projection"/>
-      <link type="text/css" rel="stylesheet" href="css/chessboard-0.3.0.css"/>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
+<html>
+  <head>
+    <title>ChessT Gif</title>
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="css/chessboard-0.3.0.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  </head>
 
-    <body>
+  <body>
 
-      <script src="js/chess.js"></script>
-      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-      <script type="text/javascript" src="js/bootstrap.min.js"></script>
-      <script type="text/javascript" src="js/chessboard-0.3.0.js"></script>
-      <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script> 
-      <script type="text/javascript" src="js/jquery-ui-1.8.24.custom.min.js"></script> 
-      <script type="text/javascript" src="js/html2canvas.js"></script>
-      <script type="text/javascript" src="js/base64.js"></script>
-      <script type="text/javascript" src="js/canvas2image.js"></script>
-      <script type="text/javascript" src="js/LZWEncoder.js"></script>
-      <script type="text/javascript" src="js/NeuQuant.js"></script>
-      <script type="text/javascript" src="js/GIFEncoder.js"></script>
-      <script type="text/javascript" src="js/b64.js"></script>
-      <script type="text/javascript" src="js/gif.js"></script>
-      <script type="text/javascript" src="js/gif.worker.js"></script>
-      <script type="text/javascript">
+    <script src="js/chess.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/chessboard-0.3.0.js"></script>
+    <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script> 
+    <script type="text/javascript" src="js/jquery-ui-1.8.24.custom.min.js"></script> 
+    <script type="text/javascript" src="js/html2canvas.js"></script>
+    <script type="text/javascript" src="js/base64.js"></script>
+    <script type="text/javascript" src="js/canvas2image.js"></script>
+    <script type="text/javascript" src="js/LZWEncoder.js"></script>
+    <script type="text/javascript" src="js/NeuQuant.js"></script>
+    <script type="text/javascript" src="js/GIFEncoder.js"></script>
+    <script type="text/javascript" src="js/b64.js"></script>
+    <script type="text/javascript" src="js/gif.js"></script>
+    <script type="text/javascript" src="js/gif.worker.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript">
 
-        function change(page){
-          $('body').fadeOut();
-          setTimeout(changeDelay, 500, page);
+      function change(page){
+        $('body').fadeOut();
+        setTimeout(changeDelay, 500, page);
+      }
+
+      function changeDelay(page){
+        window.location.href = page;
+      }
+
+    </script>
+
+    <style type="text/css">
+
+      @font-face {
+        font-family: 'Poiret One';
+        src: url('img/PoiretOne-Regular.ttf');
         }
 
-        function changeDelay(page){
-          window.location.href = page;
-        }
+      body{
+        font-family: Poiret One;
+      background-color: #e7e7e7;
+      }
 
-      </script>
+      .card{
+        margin: auto;
+        margin-top: 4px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        width: 90%;
+        text-align: center;
+        border-radius: 8px;
+        background-color: white;
+        box-shadow: 5px 5px 5px #888888;
+      }
+      
+  </style>
 
-      <style type="text/css">
+    <!--NAVBAR-->
+    <nav class="navbar navbar-default">
+      <div class="navbar-header" style="width:100%;">
+        <a class="navbar-brand " onclick="change('index.html')"><span class="glyphicon glyphicon-chevron-left"></span></a>
+        <span class="navbar-brand " style="float:right;">ChessT</span>
+      </div>
+    </nav>
 
-        @font-face {
-          font-family: 'Poiret One';
-          src: url('img/PoiretOne-Regular.ttf');
-          }
-
-        body{
-          font-family: Poiret One;
-        }
-
-      </style>
-
-      <!--NAVBAR-->
-      <nav class="navbar navbar-default">
-        <div class="navbar-header" style="width:100%;">
-          <a class="navbar-brand " onclick="change('index.html')"><span class="glyphicon glyphicon-chevron-left"></span></a>
-          <span class="navbar-brand " style="float:right;">ChessT</span>
-        </div>
-      </nav>
-
+    <div class = "card">
       <div id="board" style="margin:auto;"></div>
       <h3 style="text-align:center;">Status: <span id="status"></span></h3>
       <h3 style="text-align:center;">PGN: <span id="pgn"></span></h3>
+    </div>
 
-      <div class="container">
-        <div class="span2"> 
-          <input type="number" id="delay" style="margin-top:5px;"pattern="[0-9]*" inputmode="numeric" id="delay" class="form-control" placeholder="Delay between moves / ms">
-          <input type="number" id="initDelay" style="margin-top:5px;"pattern="[0-9]*" inputmode="numeric" id="initdelay" class="form-control" placeholder="Initial Delay / ms">
-          <input type="button" style="margin-top:5px;"id="resetBtn" class="btn btn-primary btn-block" value="Reset starting position" onclick="reset()" />
-          <input type="button" id="gifBtn" class="btn btn-success btn-block" value="Go" onclick="gifgo()" />
-        </div>
+    <div class="card">
+      <div class="span2"> 
+        <input style="width:80%; margin:auto; margin-bottom:8px;" type="number" id="delay" style="margin-top:5px;"pattern="[0-9]*" inputmode="numeric" id="delay" class="form-control" placeholder="Delay between moves / ms">
+        <input style="width:80%; margin:auto; margin-bottom:8px;" type="number" id="initDelay" style="margin-top:5px;"pattern="[0-9]*" inputmode="numeric" id="initdelay" class="form-control" placeholder="Initial Delay / ms">
+        <input style="width:80%; margin:auto; margin-bottom:8px;" type="button" style="margin-top:5px;"id="resetBtn" class="btn btn-primary btn-block" value="Reset starting position" onclick="reset()" />
+        <input style="width:80%; margin:auto; margin-bottom:8px;" type="button" id="gifBtn" class="btn btn-success btn-block" value="Go" onclick="gifgo()" />
       </div>
-      <br>
+    </div>
 
-      <div class="container" style="width:100%;">
-        <img style="margin:auto; display:block;" id="something"/>
-      </div>
-      <br>
+    <div class="card">
+      <h2>Output:</h2>
+      <img style="margin:auto; display:block;" id="something"/>
+    </div>
+    <br>
 
-      <script type="text/javascript">
-          var gif = new GIF({
-            workers:5,
-            quality:10,
-          });
+    <script type="text/javascript">
+        var gif = new GIF({
+          workers:5,
+          quality:10,
+        });
 
-          var board,
-            game = new Chess(),
-            statusEl = $('#status'),
-            fenEl = $('#fen'),
-            pgnEl = $('#pgn');
-            var arr =[];
+        var board,
+          game = new Chess(),
+          statusEl = $('#status'),
+          fenEl = $('#fen'),
+          pgnEl = $('#pgn');
+          var arr =[];
 
-          // do not pick up pieces if the game is over
-          // only pick up pieces for the side to move
-          var onDragStart = function(source, piece, position, orientation) {
-            if (game.game_over() === true ||
-                (game.turn() === 'w' && piece.search(/^b/) !== -1) ||
-                (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
-              return false;
-            }
-          };
-
-          var onDrop = function(source, target) {
-            // see if the move is legal
-            var move = game.move({
-              from: source,
-              to: target,
-              promotion: 'q' // NOTE: always promote to a queen for example simplicity
-            });
-            // illegal move
-            if (move === null) return 'snapback';
-            updateStatus();
-          };
-
-          // update the board position after the piece snap 
-          // for castling, en passant, pawn promotion
-          var onSnapEnd = function() {
-            board.position(game.fen());
-          };
-          var updateStatus = function() {
-            var status = '';
-            var moveColor = 'White';
-            if (game.turn() === 'b') {
-              moveColor = 'Black';
-            }
-            // checkmate?
-            if (game.in_checkmate() === true) {
-              status = 'Game over, ' + moveColor + ' is in checkmate.';
-            }
-            // draw?
-            else if (game.in_draw() === true) {
-              status = 'Game over, drawn position';
-            }
-            // game still on
-            else {
-              arr.push(board.position('fen'));
-              console.log(arr);
-              status = moveColor + ' to move';
-              // check?
-              if (game.in_check() === true) {
-                status += ', ' + moveColor + ' is in check';
-              }
-            }
-            statusEl.html(status);
-            fenEl.html(game.fen());
-            pgnEl.html(game.pgn());
-          };
-          var cfg = {
-            draggable: true,
-            position: 'start',
-            onDragStart: onDragStart,
-            onDrop: onDrop,
-            onSnapEnd: onSnapEnd
-          };
-        if(screen.width < screen.height){$("#board").css("width","90%");}
-            else{$("#board").css("width","30%");}
-            board = ChessBoard('board', cfg);
-            updateStatus();
-            function f(color){
-              board.orientation(color);
-            } 
-        function reset(){
-          arr = [];
-          arr.push(board.position('fen'));
-        } 
-        function gifgo(){
-          
-          gif.repeat = 0; //0  -> loop forever
-                        //1+ -> loop n times then stop
-          //encoder.setDelay(delay); //go to next frame every n milliseconds
-          //gif.start();
-          arr.push(board.position('fen'));
-          for (i = 1; i < arr.length; i++) {
-              setTimeout(ch, i*1000, i);
+        // do not pick up pieces if the game is over
+        // only pick up pieces for the side to move
+        var onDragStart = function(source, piece, position, orientation) {
+          if (game.game_over() === true ||
+              (game.turn() === 'w' && piece.search(/^b/) !== -1) ||
+              (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
+            return false;
           }
-          setTimeout(f, arr.length*1000 + 500);
-        }
-        function f(){
-          //gif.finish();
-          gif.on('finished', function(blob) {
-            //window.open("www.google.com", '_blank', 'location=yes');
-            //window.open(URL.createObjectURL(blob));
-            //console.log(URL.createObjectURL(blob));
-            //window.location.href = URL.createObjectURL(blob); 
-            
-            var image = document.getElementById('something');
-            image.src = URL.createObjectURL(blob);
+        };
+
+        var onDrop = function(source, target) {
+          // see if the move is legal
+          var move = game.move({
+            from: source,
+            to: target,
+            promotion: 'q' // NOTE: always promote to a queen for example simplicity
           });
-          gif.render();
-          //var binary_gif = gif.stream().getData(); //notice this is different from the as3gif package!
-          //var data_url = 'data:image/gif;base64,'+encode64(binary_gif);
-          //alert(data_url);
-          //var image = document.getElementById('something');
-          //image.src = data_url;
-          //window.location.href = data_url;
-          //$('#output').css("background-image", "url(" + data_url + ")");
-        } 
-        function ch(i){
+          // illegal move
+          if (move === null) return 'snapback';
+          updateStatus();
+        };
+
+        // update the board position after the piece snap 
+        // for castling, en passant, pawn promotion
+        var onSnapEnd = function() {
+          board.position(game.fen());
+        };
+        var updateStatus = function() {
+          var status = '';
+          var moveColor = 'White';
+          if (game.turn() === 'b') {
+            moveColor = 'Black';
+          }
+          // checkmate?
+          if (game.in_checkmate() === true) {
+            status = 'Game over, ' + moveColor + ' is in checkmate.';
+          }
+          // draw?
+          else if (game.in_draw() === true) {
+            status = 'Game over, drawn position';
+          }
+          // game still on
+          else {
+            arr.push(board.position('fen'));
+            console.log(arr);
+            status = moveColor + ' to move';
+            // check?
+            if (game.in_check() === true) {
+              status += ', ' + moveColor + ' is in check';
+            }
+          }
+          statusEl.html(status);
+          fenEl.html(game.fen());
+          pgnEl.html(game.pgn());
+        };
+        var cfg = {
+          draggable: true,
+          position: 'start',
+          onDragStart: onDragStart,
+          onDrop: onDrop,
+          onSnapEnd: onSnapEnd
+        };
+      if(screen.width < screen.height){$("#board").css("width","90%");}
+          else{$("#board").css("width","30%");}
+          board = ChessBoard('board', cfg);
+          updateStatus();
+          function f(color){
+            board.orientation(color);
+          } 
+      function reset(){
+        arr = [];
+        arr.push(board.position('fen'));
+      } 
+      function gifgo(){
+        
+        gif.repeat = 0; //0  -> loop forever
+                      //1+ -> loop n times then stop
+        //encoder.setDelay(delay); //go to next frame every n milliseconds
+        //gif.start();
+        arr.push(board.position('fen'));
+        for (i = 1; i < arr.length; i++) {
+            setTimeout(ch, i*1000, i);
+        }
+        setTimeout(f, arr.length*1000 + 500);
+      }
+      function f(){
+        //gif.finish();
+        gif.on('finished', function(blob) {
+          //window.open("www.google.com", '_blank', 'location=yes');
+          //window.open(URL.createObjectURL(blob));
+          //console.log(URL.createObjectURL(blob));
+          //window.location.href = URL.createObjectURL(blob); 
           
-          html2canvas($("#board"), {
-              onrendered: function(canvas) {
-                theCanvas = canvas;
-                var delay = 1000;
-                if(i == 1){
-                  delay = parseInt($('#initDelay').val()) || 1000;
-                }else{delay = parseInt($('#delay').val()) || 1000;}
-                //document.body.appendChild(canvas);
-                var context = canvas.getContext('2d');
-                
-                gif.addFrame(canvas, {delay:delay});
-                // Convert and download as image 
-                //$("#img-out").append(canvas);
-                // Clean up 
-                //document.body.removeChild(canvas);
-            }
+          var image = document.getElementById('something');
+          console.log(blob);
+
+          var reader = new window.FileReader();
+          reader.readAsDataURL(blob); 
+          reader.onloadend = function() {
+                          base64data = reader.result;   
+                          image.src = base64data; 
+
+                          window.plugins.socialsharing.share(null, null, base64data, null);           
+                          console.log(base64data );
+          }
+
+          //window.ImageHelper.saveToUserLibrary(image.src, successCallback, failCallback);
+
         });
-          board.position(arr[i],false);
-          }  
-          function saveImg(){
-            var url = $('something').attr('src');
-              cordova.plugins.saveToPhotoAlbum.save(url, function(nativeURL){
-                  console.log(nativeURL);
-              }, function(err){
-                  console.error(err);
-              });
-            }
+        gif.render();
+        //var binary_gif = gif.stream().getData(); //notice this is different from the as3gif package!
+        //var data_url = 'data:image/gif;base64,'+encode64(binary_gif);
+        //alert(data_url);
+        //var image = document.getElementById('something');
+        //image.src = data_url;
+        //window.location.href = data_url;
+        //$('#output').css("background-image", "url(" + data_url + ")");
+      } 
+      function ch(i){
+        
+        html2canvas($("#board"), {
+            onrendered: function(canvas) {
+              theCanvas = canvas;
+              var delay = 1000;
+              if(i == 1){
+                delay = parseInt($('#initDelay').val()) || 1000;
+              }else{delay = parseInt($('#delay').val()) || 1000;}
+              //document.body.appendChild(canvas);
+              var context = canvas.getContext('2d');
+              
+              gif.addFrame(canvas, {delay:delay});
+              // Convert and download as image 
+              //$("#img-out").append(canvas);
+              // Clean up 
+              //document.body.removeChild(canvas);
+          }
+      });
+
+        //check pgn opposed to fen
+        //
+        //
+        board.position(arr[i],false);
+        }  
+        function saveImg(){
+          var url = $('something').attr('src');
+            cordova.plugins.saveToPhotoAlbum.save(url, function(nativeURL){
+                console.log(nativeURL);
+            }, function(err){
+                console.error(err);
+            });
+          }
 /*
-          $(function() { 
-            $("#gifBtn").click(function() { 
-              html2canvas($("#board"), {
-              onrendered: function(canvas) {
-                theCanvas = canvas;
-                document.body.appendChild(canvas);
-                // Convert and download as image 
-                $("#img-out").append(canvas);
-                // Clean up 
-                //document.body.removeChild(canvas);
-            }
-        });
-    });
+        $(function() { 
+          $("#gifBtn").click(function() { 
+            html2canvas($("#board"), {
+            onrendered: function(canvas) {
+              theCanvas = canvas;
+              document.body.appendChild(canvas);
+              // Convert and download as image 
+              $("#img-out").append(canvas);
+              // Clean up 
+              //document.body.removeChild(canvas);
+          }
+      });
+  });
 }); 
 */
-        
-      </script>
-    </body>
-  </html>
+      
+    </script>
+  </body>
+</html>
