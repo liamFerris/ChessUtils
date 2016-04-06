@@ -10,7 +10,7 @@
   <body>
 
     <script src="js/chess.js"></script>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/chessboard-0.3.0.js"></script>
     <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script> 
@@ -88,10 +88,14 @@
     <div class="card">
       <h2>Output:</h2>
       <img style="margin:auto; display:block;" id="something"/>
+      <input style="width:80%; margin:auto; margin-bottom:8px; margin-top:8px; display:none;" type="button" id="save" class="btn btn-success btn-block" value="Save Gif" onclick="save()" />
     </div>
     <br>
 
     <script type="text/javascript">
+
+        var base64string;
+
         var gif = new GIF({
           workers:5,
           quality:10,
@@ -208,8 +212,10 @@
                           base64data = reader.result;   
                           image.src = base64data; 
                           $('#gifBtn').prop('disabled', false);
-                          window.plugins.socialsharing.share(null, null, base64data, null);           
-                          console.log(base64data );
+                          $('#save').css('display','block');
+                          base64string = base64data;
+                          //window.plugins.socialsharing.share(null, null, base64data, null);           
+                          //console.log(base64data);
           }
 
           //window.ImageHelper.saveToUserLibrary(image.src, successCallback, failCallback);
@@ -224,6 +230,11 @@
         //window.location.href = data_url;
         //$('#output').css("background-image", "url(" + data_url + ")");
       } 
+
+      function save(){
+        console.log(base64string);
+        window.plugins.socialsharing.share(null, null, base64string, null);
+      }
       function ch(i){
         
         html2canvas($("#board"), {
