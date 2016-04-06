@@ -178,6 +178,8 @@
         arr.push(board.position('fen'));
       } 
       function gifgo(){
+
+        $('#gifBtn').prop('disabled', true);
         
         gif.repeat = 0; //0  -> loop forever
                       //1+ -> loop n times then stop
@@ -205,7 +207,7 @@
           reader.onloadend = function() {
                           base64data = reader.result;   
                           image.src = base64data; 
-
+                          $('#gifBtn').prop('disabled', false);
                           window.plugins.socialsharing.share(null, null, base64data, null);           
                           console.log(base64data );
           }
