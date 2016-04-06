@@ -86,6 +86,13 @@
 
     <div class="card">
       <h2>Output:</h2>
+
+      <div class="progress" style="width:75%; margin:auto; display:none;" id="progress">
+        <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 90%">
+          <span class="sr-only">90% Complete</span>
+        </div>
+      </div>
+
       <img style="margin:auto; display:block;" id="something"/>
       <input style="width:80%; margin:auto; margin-bottom:8px; margin-top:8px; display:none;" type="button" id="save" class="btn btn-success btn-block" value="Save Gif" onclick="save()" />
     </div>
@@ -97,7 +104,7 @@
 
         var gif = new GIF({
           workers:5,
-          quality:10,
+          quality:20,
         });
 
         var board,
@@ -182,6 +189,7 @@
       } 
       function gifgo(){
 
+        $('#progress').css('display','block');
         $('#gifBtn').prop('disabled', true);
         
         gif.repeat = 0; //0  -> loop forever
@@ -208,7 +216,9 @@
           var reader = new window.FileReader();
           reader.readAsDataURL(blob); 
           reader.onloadend = function() {
-                          base64data = reader.result;   
+                          base64data = reader.result; 
+
+                          $('#progress').css('display','none');  
                           image.src = base64data; 
                           $('#gifBtn').prop('disabled', false);
                           $('#save').css('display','block');
