@@ -71,7 +71,20 @@
       </div>
     </nav>
 
-    <div class = "card">
+    <div class="card" id="out" style="display:none">
+      <span class="glyphicon glyphicon-remove" onclick="change('gif.html')" aria-hidden="true" style="float:right; margin-right:16px;"></span>
+      <h2>Output:</h2>
+
+      <div style="width:25%; margin:auto; display:none;" id="progress">
+        <img src="img/ajax-loader.gif"/>
+      </div>
+      <br>
+      <img style="margin:auto; display:block;" id="something"/>
+      <input style="width:80%; margin:auto; margin-bottom:8px; margin-top:8px; display:none;" type="button" id="save" class="btn btn-success btn-block" value="Save Gif" onclick="save()" />
+    </div>
+
+    <div class = "card" id="in">
+      <h2>Make a Gif</h2>
       <div id="board" style="margin:auto;"></div>
       <h3 style="text-align:center;">Status: <span id="status"></span></h3>
       <h3 style="text-align:center;">PGN: <span id="pgn"></span></h3>
@@ -85,18 +98,7 @@
       </div>
     </div>
 
-    <div class="card">
-      <h2>Output:</h2>
-
-      <div class="progress" style="width:75%; margin:auto; display:none;" id="progress">
-        <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 90%">
-          <span class="sr-only">90% Complete</span>
-        </div>
-      </div>
-      <br>
-      <img style="margin:auto; display:block;" id="something"/>
-      <input style="width:80%; margin:auto; margin-bottom:8px; margin-top:8px; display:none;" type="button" id="save" class="btn btn-success btn-block" value="Save Gif" onclick="save()" />
-    </div>
+   
     <br>
 
     <script type="text/javascript">
@@ -190,6 +192,7 @@
       } 
       function gifgo(){
 
+        $('#out').fadeIn();
         $('#progress').css('display','block');
         $('#gifBtn').prop('disabled', true);
         
@@ -223,6 +226,7 @@
                           image.src = base64data; 
                           $('#gifBtn').prop('disabled', false);
                           $('#save').css('display','block');
+                          setTimeout(out, 1000);
                           base64string = base64data;
                           //window.plugins.socialsharing.share(null, null, base64data, null);           
                           //console.log(base64data);
@@ -240,6 +244,12 @@
         //window.location.href = data_url;
         //$('#output').css("background-image", "url(" + data_url + ")");
       } 
+
+      function out(){
+
+         $('#in').fadeOut();
+
+      }
 
       function save(){
         console.log(base64string);

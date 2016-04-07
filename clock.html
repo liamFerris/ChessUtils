@@ -13,7 +13,13 @@
 
         function StartClock(){
           var min = parseInt($("#inputTimeMin").val()) || 0;
+          if(min < 0){
+            min = 0;
+          }
           var sec = parseInt($("#inputTimeSec").val()) || 0;
+          if(sec >= 60 || sec < 0){
+            sec = 0;
+          }
           var inc = parseInt($("#inputInc").val()) || 0;
           $('body').fadeOut();
           setTimeout(changeDelay, 500, "clockStart.html?min=" + min + "&sec=" + sec + "&inc=" + inc);
